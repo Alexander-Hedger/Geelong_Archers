@@ -37,6 +37,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts.apps.AccountsConfig',
+    'badges.apps.BadgesConfig',
+    'comps.apps.CompsConfig',
+    'contact_forms.apps.ContactFormsConfig',
+    'events.apps.EventsConfig',
+    'gallery.apps.GalleryConfig',
+    'intro_courses.apps.IntroCoursesConfig',
+    'minutes.apps.MinutesConfig',
+    'pages.apps.PagesConfig',
+    'rankings.apps.RankingsConfig',
+    'social.apps.SocialConfig',
+    'store.apps.StoreConfig',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +66,7 @@ ROOT_URLCONF = 'geelong_archers.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
