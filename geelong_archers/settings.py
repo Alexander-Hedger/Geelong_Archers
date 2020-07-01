@@ -157,3 +157,8 @@ AUTH_USER_MODEL = 'accounts.Account'
 
 # Clickjacking protection changed from deny to allowed iframe from same origin
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
