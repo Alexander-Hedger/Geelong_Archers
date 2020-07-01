@@ -7,7 +7,7 @@ from events.models import EventIntro
 
 class ContactIntro(models.Model):
     event_id = models.ForeignKey(
-        EventIntro, on_delete=models.DO_NOTHING, blank=True, null=True)
+        EventIntro, on_delete=models.CASCADE, blank=True, null=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)

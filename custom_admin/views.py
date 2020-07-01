@@ -35,15 +35,17 @@ def admin_dashboard(request):
             event = EventIntro.objects.get(short_title=intro_course_id)
             contacts_intro = ContactIntro.objects.order_by(
                 'contact_date').filter(event_id=event)
+
         except:
             event = events_intro.first()
             print(event.date_start)
             contacts_intro = ContactIntro.objects.order_by(
                 'contact_date').filter(event_id=event)
 
+        context['contacts_intro'] = contacts_intro
+
     context['events_comp'] = events_comp
     context['events_intro'] = events_intro
-    context['contacts_intro'] = contacts_intro
     context['values'] = request.GET
 
     return render(request, 'custom_admin/admin_dashboard.html', context)
