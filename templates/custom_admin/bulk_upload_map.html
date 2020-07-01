@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="bulk_upload_map" class="col-12 col-md-8 col-lg-9 pl-4 pr-4">
+    <h3 id="main_title" class="text-center display-4 my-4">Bulk Upload Mapping</h3>
+    <div class="row">
+        <div class="col-12 col-sm-10 col-md-12 col-lg-10 m-auto">
+            <div class="card bg-white">
+                <div class="card-header bg-primary"></div>
+                <div class="card-body py-3 px-4">
+
+
+                    {% if form_type == 'awards'%}
+                        <h3 class="text-center">Map Award Fields</h3>
+                        <form action="{% url 'bulk_upload_tool' 'award' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label for="award_name" class="col-6">Award Name</label>
+                                <select class="form-control col-6" name="award_name" id="award_name">
+                                    {% for header in headers%}
+                                        <option value={{header}}>{{header}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="award_image" class="col-6">Award Image</label>
+                                <select class="form-control col-6" name="award_image" id="award_image">
+                                    {% for header in headers%}
+                                        <option value={{header}}>{{header}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <input type="hidden" id="uploaded_file_url" name="uploaded_file_url" value="{{uploaded_file_url}}">
+                            <div class="form-group text-right my-0 py-0">
+                                <a href="{% url 'bulk_upload_main' %}" class="btn btn-outline-danger btn-lg mr-3">Cancel</a>
+                                <input type="submit" value="Upload" class="btn btn-primary btn-lg">
+                            </div>
+                        </form>
+                    {% endif %}
+
+
+                    {% if form_type == 'members'%}
+                        <h3 class="text-center">Map Members Fields</h3>
+                        <form action="{% url 'bulk_upload_tool' 'member' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label for="email" class="col-6">Email</label>
+                                <select class="form-control col-6" name="email" id="email">
+                                    {% for header in headers%}
+                                        <option value={{header}}>{{header}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="first_name" class="col-6">First Name</label>
+                                <select class="form-control col-6" name="first_name" id="first_name">
+                                    {% for header in headers%}
+                                        <option value={{header}}>{{header}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="last_name" class="col-6">Last Name</label>
+                                <select class="form-control col-6" name="last_name" id="last_name">
+                                    {% for header in headers%}
+                                        <option value={{header}}>{{header}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="archery_australia_id" class="col-6">Archery Australia ID</label>
+                                <select class="form-control col-6" name="archery_australia_id" id="archery_australia_id">
+                                    {% for header in headers%}
+                                        <option value={{header}}>{{header}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="birth_date" class="col-6">Date of Birth</label>
+                                <select class="form-control col-6" name="birth_date" id="birth_date">
+                                    {% for header in headers%}
+                                        <option value={{header}}>{{header}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="member_expiry" class="col-6">Membership Expiry</label>
+                                <select class="form-control col-6" name="member_expiry" id="member_expiry">
+                                    {% for header in headers%}
+                                        <option value={{header}}>{{header}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="password" class="col-6">Temporary Password</label>
+                                <select class="form-control col-6" name="password" id="password">
+                                    {% for header in headers%}
+                                        <option value={{header}}>{{header}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <input type="hidden" id="uploaded_file_url" name="uploaded_file_url" value="{{uploaded_file_url}}">
+                            <div class="form-group text-right my-0 py-0">
+                                <a href="{% url 'bulk_upload_main' %}" class="btn btn-outline-danger btn-lg mr-3">Cancel</a>
+                                <input type="submit" value="Upload" class="btn btn-primary btn-lg">
+                            </div>
+                        </form>
+                    {% endif %}
+
+                    
+                </div>
+                <div class="card-footer bg-dark rounded-bottom"></div>
+            </div>
+        </div>    
+    </div>  
+</div>    
+
+{% endblock %}

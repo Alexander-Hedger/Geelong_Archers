@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %} | Album Edit {% endblock %}
+
+{% block content %}
+<div id="gallery" class="col-12 col-md-8 col-lg-9 pl-4 pr-4">
+    <h3 id="main_title" class="text-center display-4 my-4">Edit an album</h3>
+    <!-- Alerts -->
+    {% include 'partials/_alerts.html' %}
+
+    <div class="row">
+        <div class="col-12 col-sm-10 col-md-12 col-lg-10 m-auto">
+            <div class="card mt-3">
+                <div class="card-header bg-primary"></div>
+                <div class="card-body py-3 px-4">
+                    <h3 class="text-center text-dark">Edit {{album.title}}</h3>
+                    
+                    <form action="{% url 'gallery-edit' album.id %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row ">
+                            <div class="col-12 col-sm-8 offset-sm-2 offset-md-0 col-md-4 mb-3">
+                                <img id="display_photo" src="../media/{{ album.feature_image.image }}" alt="Image Unavailable" class="img-fluid">
+                            </div>
+                            <div class="col-12 col-md-8 mb-3">
+                                <div class="form-group">
+                                    <label class="text-dark" for="album_title">Title</label>
+                                    <input type="text" class="form-control" name="album_title" id="album_title" maxlength="140" aria-describedby="title_help" value="{{album.title}}">
+                                    <small id="title_help" class="form-text text-muted">Limit 140 Characters</small>
+                                </div>
+                                <div class="form-group ml-auto">
+                                    <label class="text-dark" for="upload_images">Upload Images</label>
+                                    <input type="file" class="form-control-file" name="upload_images" id="upload_images" onchange="form.submit()"  multiple>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-flex align-items-center">
+                            <div class="form-group col-8 col-sm-6 col-lg-3">
+                                <select class="form-control" name="action_type" id="action_type">
+                                    <option value="none"> --Select-- </option>
+                                    <option value="delete">Delete</option>
+                                    <option value="feature">Make Feature</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Apply" class="btn btn-primary btn-sm">
+                            </div>
+
+
+                            
+                        </div>
+        
+                        <table class="table table-bordered table-hover table-sm">
+                            <thead class="bg-dark text-primary">
+                                <tr>
+                                    <th scope="col" style="width: 10%">
+                                        <div class="custom-control custom-checkbox text-center">
+                                            <input type="checkbox" class="custom-control-input" id="select_all">
+                                            <label class="custom-control-label" for="select_all"></label>
+                                        </div>
+                                    </th>
+                                    
+                                    <th class="text-center" style="width: 15%" scope="col">Thumbnail</th>
+                                    <th scope="col" style="width: 75%">Image Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if album.images.all %}
+                                    {% for image in album.images.all %}
+                                        <tr>
+                                            <th scope="row" class="align-middle">
+                                                <div class="custom-control custom-checkbox text-center">
+                                                    <input type="checkbox" class="custom-control-input" name="images" value="{{image.pk}}" id="{{image.pk}}">
+                                                    <label class="custom-control-label" for="{{image.pk}}"></label>
+                                                </div>
+                                            </th>
+                                            <td class="text-center align-middle"><img id="admin_thumbnail" src="../media/{{image.thumbnail}}" alt="missing" class="img-thumbnail img-fluid"></td>
+                                            <td class="align-middle">{{image.name}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                <tr class="text-center">
+                                    <td colspan="3">No images in this album</td>
+                                </tr>
+                                {% endif%}
+                            </tbody>
+                        </table>
+
+                        <div class="form-group text-right my-0 py-0">
+                            <a href="{% url 'gallery-admin' %}" class="btn btn-outline-danger btn-lg mr-3 ml-auto">Cancel</a>
+                            <input type="submit" value="Confirm Edits" class="btn btn-primary btn-lg">
+                        </div>
+                      </form>
+                   
+                </div>
+                <div class="card-footer bg-dark rounded-bottom"></div>
+            </div>
+        </div>
+        
+    </div>
+</div>    
+
+{% endblock %}
+
+{% block dependancies %} 
+<script type="text/javascript">
+    $("#select_all").click(function(){
+        $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+    
+    });
+</script>
+{% endblock %}
+

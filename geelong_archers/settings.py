@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+from django.contrib.messages import constants as messages
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -25,12 +26,13 @@ SECRET_KEY = '&gsosw7gw7m9i!q%dx-+aq@6q$&2vkp62tzj8z-j7+q%c3fr=r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.0.2', 'localhost', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django_template_maths',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,17 +40,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
-    'badges.apps.BadgesConfig',
-    'comps.apps.CompsConfig',
+    'announcements.apps.AnnouncementsConfig',
+    'awards.apps.AwardsConfig',
     'contact_forms.apps.ContactFormsConfig',
+    'custom_admin.apps.CustomAdminConfig',
     'events.apps.EventsConfig',
     'gallery.apps.GalleryConfig',
-    'intro_courses.apps.IntroCoursesConfig',
     'minutes.apps.MinutesConfig',
     'pages.apps.PagesConfig',
     'rankings.apps.RankingsConfig',
-    'social.apps.SocialConfig',
     'store.apps.StoreConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -58,6 +60,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -75,9 +78,11 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'geelong_archers.wsgi.application'
 
@@ -87,8 +92,11 @@ WSGI_APPLICATION = 'geelong_archers.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'geelong_archers',
+        'USER': 'postgres',
+        'PASSWORD': 's1bc9kAV',
+        'HOST': 'localhost'
     }
 }
 
@@ -117,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Australia/Melbourne'
 
 USE_I18N = True
 
@@ -134,3 +142,18 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'geelong_archers/static')
 ]
+
+# Media Folder Settings
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+# Messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger'
+}
+
+# Custom User Model
+AUTH_USER_MODEL = 'accounts.Account'
+
+# Clickjacking protection changed from deny to allowed iframe from same origin
+X_FRAME_OPTIONS = 'SAMEORIGIN'

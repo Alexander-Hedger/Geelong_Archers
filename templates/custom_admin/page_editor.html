@@ -1,0 +1,83 @@
+{% extends 'base_special.html' %}
+
+{% load static %}
+
+{% block title %} | Page Editor {% endblock %}
+
+{% block header %}
+<!-- TinyMCE Text Editor-->
+<script src="https://cdn.tiny.cloud/1/2dzbl90etw8im0j9ekkh93c8sj6tzabjfsenbxfk1xv4n9xf/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+{% endblock %}
+
+{% block content %}
+
+        <div id="admin_dashboard" class="container col-12 col-md-8 col-lg-9 pl-4 pr-4">
+            <h3 id="main_title" class="text-center display-4 my-4">Page Editor</h3>
+            
+            <!-- Alerts -->
+            {% include 'partials/_alerts.html' %}
+            <script>
+                tinymce.init({
+                    selector: '#content',
+                    plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+                    imagetools_cors_hosts: ['picsum.photos'],
+                    menubar: 'file edit view insert format tools table help',
+                    toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+                    toolbar_sticky: true,
+                    autosave_ask_before_unload: true,
+                    autosave_interval: "30s",
+                    autosave_prefix: "{path}{query}-{id}-",
+                    autosave_restore_when_empty: false,
+                    autosave_retention: "2m",
+                    image_advtab: true,
+                    importcss_append: true,
+                    template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
+                    template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
+                    height: 1000,
+                    image_caption: true,
+                    quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+                    noneditable_noneditable_class: "mceNonEditable",
+                    toolbar_mode: 'sliding',
+                    contextmenu: "link image imagetools table",
+                    
+                });
+            </script>    
+
+
+
+            <div class="row">
+                <div id="links" class="col-12 col-lg-3 pl-0 pr-3">
+                    <div class="card">
+                        <div class="card-header"><i class="far fa-file-alt mr-2"></i>Pages</div>
+                        <div class="card-body p-0 m-0 text-center">
+                            <ul class="list-group font-weight-bold">
+                                {% for page in page_content %}
+                                    <a href="{% url 'page_editor' page.name %}"><li class="list-group-item">{{page}}</li></a>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="col-12 col-lg-9 pl-3 pr-0">
+                    <div class="card">
+                        <div class="card-header bg-primary"></div>
+                        <div class="card-body py-3 px-4">
+                            <h3 class="text-center">Edit: {{page.title}}</h3>
+                            <form action="#" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <input type="textarea" class="form-control" name="content" id="content" value="{{page.content}}">
+                                </div>
+                                <div class="form-group text-right my-0 py-0">
+                                    <input type="submit" value="Publish" class="btn btn-primary btn-lg">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer bg-dark rounded-bottom"></div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+{% endblock %}

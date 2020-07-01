@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %} | Announcements {% endblock %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>
+{% endblock %}
+
+{% block content %}
+<div id="events-main" class="col-12 col-md-8 col-lg-9 pl-4 pr-4">
+    <!-- Alerts -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-8 col-lg-6 mx-auto mt-3 mb-0 pb-0">
+                {% include 'partials/_alerts.html' %}
+            </div>
+        </div>
+    </div>
+    <h3 id="main_title" class="text-center display-4 my-4">Announcements Admin Dashboard</h3>
+
+    <div class="row">
+        <div class="col-12 mb-5">
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <h4 class="ml-4 mb-0">Previous Announcements</h4>
+                    <a href="{% url 'announcements-create' %}" class="btn btn-primary btn-sm ml-auto mr-5 align-self-center">Create New</a>
+                </div>
+                <div class="card-body pt-1">
+                    <table id="announcements_table" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%">Short Title</th>
+                                <th style="width: 10%" class="text-center">Published</th>
+                                <th style="width: 45%" class="text-center">Announcement </th>
+                                <th style="width: 20%" class="text-center">Date Published</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% if admin_announcements %}
+                                {% for announcement in admin_announcements %}
+                                        <tr>
+                                            <td><a href="{% url 'announcements-edit' announcement.id %}" class="text-secondary">{{ announcement.short_title }}</a></td>
+                                            {% if announcement.is_published %}
+                                                <td class="text-center"><i class="far fa-check-circle text-success"></i></td>
+                                            {% else %}
+                                                <td class="text-center"> <i class="far fa-times-circle text-danger"></i></td>
+                                            {% endif %}
+                                            <td class="text-center">{{ announcement.short_announcement|slice:":50" }}...</td>
+                                            <td class="text-center">{{ announcement.date_published|date:'d/m/y, P' }}</td>
+                                        </tr>
+                                {% endfor %}
+                            {% else %}
+                                <div>
+                                    <p>No Announcements Available</p>
+                                </div>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+{% endblock %}
+
+{% block dependancies %} 
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#announcements_table').DataTable({
+            
+            'ordering' : false
+            
+        });
+
+    } );
+</script>
+{% endblock %}

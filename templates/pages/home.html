@@ -1,5 +1,82 @@
-{% extends 'base.html' %}
+{% extends 'base_special.html' %}
+
+{% load static %}
 
 {% block content %}
-home
+<!-- Alerts -->
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-8 col-lg-6 mx-auto mt-3 mb-0 pb-0">
+      {% include 'partials/_alerts.html' %}
+    </div>
+  </div>
+  
+</div>
+
+<!--Showcase-->
+<section>
+<div id="mainCarousel" class="carousel slide mt-3" data-ride="carousel" data-interval="5000">
+    <ol class="carousel-indicators">
+      <li data-target="#mainCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#mainCarousel" data-slide-to="1"></li>
+      <li data-target="#mainCarousel" data-slide-to="2"></li>
+      <li data-target="#mainCarousel" data-slide-to="3"></li>
+    </ol>
+    <div class="carousel-inner m-0 p-0">
+      <div class="carousel-item img1 active">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>First slide label</h5>
+          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        </div>
+      </div>
+      <div class="carousel-item img2">
+          <div class="carousel-caption d-none d-md-block">
+          <h5>Second slide label</h5>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+      <div class="carousel-item img3">
+          <div class="carousel-caption d-none d-md-block">
+          <h5>Third slide label</h5>
+          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+        </div>
+      </div>
+      <div class="carousel-item img4">
+        <div class="carousel-caption d-none d-md-block">
+        </div>
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#mainCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#mainCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+</div>
+</section>
+<section id="main">
+<div class="container p-0 m-0">
+    <div class="row">
+
+        <div class="col-3 d-none d-lg-block">
+          {% include '../partials/_sidebar_announcements.html' %}
+        </div>
+        
+        <div class="col-12 col-lg-6 mt-3">
+            <h2 id="main_title" class="text-center mt-3">Welcome to Geelong Archers</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos consequuntur minima deserunt perferendis, qui eum provident? Quod tempora ducimus veritatis exercitationem ut repudiandae dolor expedita, unde eveniet itaque nesciunt iste ipsum sequi voluptatibus eaque esse ratione impedit? Deleniti ipsum impedit totam. Aut quasi itaque, doloremque vero quo veritatis eius enim delectus quaerat iste maiores maxime amet neque! Saepe minima ratione impedit at aut quidem vero recusandae dolorem pariatur! Nesciunt eveniet laudantium hic aspernatur nostrum, ea voluptas, harum beatae eaque velit ullam nihil iure blanditiis dicta corrupti nisi, quas pariatur esse autem! Vero facilis obcaecati beatae illum recusandae deserunt neque voluptas.</p>
+        </div>
+
+        <div class="col-12 col-md-6 d-block d-lg-none">
+          {% include '../partials/_sidebar_announcements.html' %}
+        </div>
+        
+        <div class="col-12 col-md-6 col-lg-3">
+          {% include '../partials/_sidebar_events.html' %}
+        </div>
+    </div>
+</div>
+</section>
 {% endblock %}

@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+
+{% block title %} | Events Admin {% endblock %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>
+{% endblock %}
+
+{% block content %}
+
+<!-- {% if user.id in validate_events_intro %}
+    AYAYAYAYAYAY
+{% endif %} -->
+<div id="events-admin" class="col-12 col-md-8 col-lg-9 pl-4 pr-4">
+    <div class="row">
+        <div class="col-12 col-md-8 col-lg-6 mx-auto mb-0 pb-0">
+            {% include 'partials/_alerts.html' %}
+        </div>
+    </div>
+   
+    <h3 id="main_title" class="text-center display-4 my-4">Events Admin Dashboard</h3>
+
+    <div class="row">
+        <div class="col-12 mb-5">
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <h4 class="ml-4 mb-0">Match of the Day</h4>
+                    <a href="{% url 'events-create' 'motd' %}" class="btn btn-primary btn-sm ml-auto mr-4 align-self-center">Create New</a>
+                </div>
+                <div class="card-body pt-1">
+                    <table id="motd_table" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="width: 33.34%">Short Title</th>
+                                <th style="width: 16.66%" class="text-center">Published</th>
+                                <th style="width: 25%" class="text-center">Date Start</th>
+                                <th style="width: 25%" class="text-center">Date End</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if events_motd %}
+                                {% for event in events_motd %}
+                                    
+                                        <tr>
+                                            <td><a href="" class="text-secondary">{{ event.short_title }}</a></td>
+                                            {% if event.is_published %}
+                                                <td class="text-center"><i class="far fa-check-circle text-success"></i></td>
+                                            {% else %}
+                                                <td class="text-center"> <i class="far fa-times-circle text-danger"></i></td>
+                                            {% endif %}
+                                            <td class="text-center">{{ event.date_start }}</td>
+                                            <td class="text-center">{{ event.date_end }}</td>
+                                        </tr>
+                                   
+                                {% endfor %}
+                            {% else %}
+                                <div>
+                                    <p>No Events Available</p>
+                                </div>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-5">
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <h4 class="ml-4 mb-0">Tournaments & QRE's</h4>
+                    <a href="{% url 'events-create' 'comp' %}" class="btn btn-primary btn-sm ml-auto mr-4 align-self-center">Create New</a>
+                </div>
+                <div class="card-body pt-1">
+                    <table id="comp_table" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="width: 33.34%">Short Title</th>
+                                <th style="width: 16.66%" class="text-center">Published</th>
+                                <th style="width: 25%" class="text-center">Date Start</th>
+                                <th style="width: 25%" class="text-center">Date End</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if events_comp %}
+                                {% for event in events_comp %}
+                                    <tr>
+                                        <td><a href="" class="text-secondary">{{ event.short_title }}</a></td>
+                                        {% if event.is_published %}
+                                            <td class="text-center"><i class="far fa-check-circle text-success"></i></td>
+                                        {% else %}
+                                            <td class="text-center"> <i class="far fa-times-circle text-danger"></i></td>
+                                        {% endif %}
+                                        <td class="text-center">{{ event.date_start }}</td>
+                                        <td class="text-center">{{ event.date_end }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <div>
+                                    <p>No Events Available</p>
+                                </div>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-5">
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <h4 class="ml-4 mb-0">Beginner's Courses</h4>
+                    <a href="{% url 'events-create' 'intro' %}" class="btn btn-primary btn-sm ml-auto mr-4 align-self-center">Create New</a>
+                </div>
+                <div class="card-body pt-1">
+                    <table id="intro_table" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="width: 33.34%">Short Title</th>
+                                <th style="width: 16.66%" class="text-center">Published</th>
+                                <th style="width: 25%" class="text-center">Date Start</th>
+                                <th style="width: 25%" class="text-center">Date End</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if events_intro %}
+                                {% for event in events_intro %}
+                                    <tr>
+                                        <td><a href="" class="text-secondary">{{ event.short_title }}</a></td>
+                                        {% if event.is_published %}
+                                            <td class="text-center"><i class="far fa-check-circle text-success"></i></td>
+                                        {% else %}
+                                            <td class="text-center"> <i class="far fa-times-circle text-danger"></i></td>
+                                        {% endif %}
+                                        <td class="text-center">{{ event.date_start }}</td>
+                                        <td class="text-center">{{ event.date_end }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <div>
+                                    <p>No Events Available</p>
+                                </div>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}
+
+{% block dependancies %} 
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#motd_table').DataTable({
+            
+            'ordering' : false
+            
+        });
+
+        $('#comp_table').DataTable({
+            
+            'ordering' : false
+            
+        });
+
+        $('#intro_table').DataTable({
+            
+            'ordering' : false
+            
+        });
+
+    } );
+</script>
+{% endblock %}

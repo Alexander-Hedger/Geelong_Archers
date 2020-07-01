@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block title %} | Announcements {% endblock %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>
+{% endblock %}
+
+{% block content %}
+<script>
+
+</script>
+  
+<div id="events-main" class="col-12 col-md-8 col-lg-9 pl-4 pr-4">
+    <h3 id="main_title" class="text-center d-none d-md-block display-4 my-4">Announcements</h3>
+    <h1 id="main_title" class="text-center d-block d-md-none my-4">Announcements</h1>
+       
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h4 class="text-center mb-0">Last Announcement</h4>
+                </div>
+                <div class="card-body pt-1 mt-1">
+                    <div id='modal_date' class="card-text mb-1 pb-1 pt-1 mt-1 text-right">{{ announcements.0.date_published}}</div>
+                    <h5 class="card-title">{{ announcements.0.title}}</h5>
+                    <div class="card-text">{{ announcements.0.announcement | safe}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row d-none d-md-block">
+        <div class="col-12 mb-5">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="ml-4 mb-0 text-center">Previous Announcements</h4>
+                </div>
+                <div class="card-body pt-1">
+                    <table id="announcements_table" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%">Short Title</th>
+                                <th style="width: 50%" class="text-center">Announcement </th>
+                                <th style="width: 25%" class="text-center">Date Published</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% if admin_announcements %}
+                                {% for announcement in admin_announcements|slice:"1:" %}
+                                        <tr>
+                                            <td><a href="#" class="text-secondary" data-toggle="modal" data-date ="{{announcement.date_published}}" data-target="#announcement_modal" data-announcement="{{ announcement.announcement }}" data-title="{{announcement.title}}">{{ announcement.short_title }}</a></td>
+                                            <td class="text-center">{{ announcement.short_announcement|slice:":50" }}...</td>
+                                            <td class="text-center">{{ announcement.date_published }}</td>
+                                        </tr>
+                                {% endfor %}
+                            {% else %}
+                                <div>
+                                    <p>No Announcements Available</p>
+                                </div>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row d-block d-md-none">
+        <div class="col-12 mb-5">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="ml-4 mb-0 text-center">Previous Announcements</h4>
+                </div>
+                <div class="card-body pt-1">
+                    <table id="announcements_table" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="width: 70%">Short Title</th>
+                                <th style="width: 30%" class="text-center">Date Published</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {% if admin_announcements %}
+                                {% for announcement in admin_announcements|slice:"1:" %}
+                                        <tr>
+                                            <td><a href="#" class="text-secondary" data-toggle="modal" data-date ="{{announcement.date_published}}" data-target="#announcement_modal" data-announcement="{{ announcement.announcement }}" data-title="{{announcement.title}}">{{ announcement.short_title }}</a></td>
+                                            <td class="text-center">{{ announcement.date_published|date:'d/m/y, P'}}</td>
+                                        </tr>
+                                {% endfor %}
+                            {% else %}
+                                <div>
+                                    <p>No Announcements Available</p>
+                                </div>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade border-none shadow-none" id="announcement_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="card bg-white">
+                <div class="card-header text-center mb-0">
+                    <h4 id='modal_title' class="text-center mb-0">title</h4>
+                </div>
+                <div class="card-body pt-1 mt-0">
+                    <div id='modal_date' class="card-text mb-1 pb-1 pt-1 mt-1 text-right">date</div>
+                    <div id='modal_announcement' class="card-text">announcement</div>
+                </div>
+                <div class="card-footer bg-dark d-flex justify-content-end py-2">
+                    <button type="button" class="btn btn-primary text-dark" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block dependancies %} 
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#announcements_table').DataTable({
+            
+            'ordering' : false
+            
+        });
+
+    } );
+
+    $('#announcement_modal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var title = button.data('title')
+        var date = button.data('date')
+        var announcement = button.data('announcement')
+           
+        // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('#modal_title').text(title)
+        modal.find('#modal_date').text('Published on ' + date)
+        modal.find('#modal_announcement').html(announcement)
+      })
+</script>
+{% endblock %}

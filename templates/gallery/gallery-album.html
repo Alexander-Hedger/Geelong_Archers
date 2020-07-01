@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %} | Album {% endblock %}
+
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/lightbox.css' %}">
+{% endblock %}
+
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<div id="gallery" class="col-12 col-md-8 col-lg-9 pl-4 pr-4">
+    <!-- Alerts -->
+    {% include 'partials/_alerts.html' %}
+    <h3 id="main_title" class="text-center display-4 my-4">{{album.title}}</h3>
+    <div class="row px-3 pt-0">
+        <div class="card col-12 p-0">
+            <div class="card-header d-flex align-items-center">
+                <h4 class="ml-4 mb-0"><i class="fas fa-images mr-2"></i>{{album.quantity}} Photos</h4>
+                <a href="{% url 'gallery-main' %}" class="btn btn-primary btn-sm ml-auto mr-4 align-self-center">Back to Gallery</a>
+            </div>
+            <div class="card-body pb-1">
+                <div class="row">
+                    {% if album.images.all %}
+                        {% for image in album.images.all %}
+                            <div class="col-4 col-lg-2 px-2 mb-3">
+                                <a href="../media/{{image.image}}" data-lightbox="album">
+                                    <div id="album-card" class="card">
+                                        <div id="image" style="background-image: url(../media/{{image.thumbnail}})" class="card-body p-1"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No Galleries Available</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block dependancies %} 
+<script src="{% static 'js/lightbox.js' %} "></script>
+<script>
+    lightbox.option({
+      'fadeDuration' : 100,
+      'fadeDuration' : 100,
+      'wrapAround': true,
+      'fitImagesInViewport': true,
+
+    })
+</script>
+{% endblock %}

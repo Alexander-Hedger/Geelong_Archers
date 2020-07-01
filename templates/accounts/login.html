@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="login" class="col-12 col-md-8 col-lg-9 pl-4 pr-4">
+    <h3 id="main_title" class="text-center display-4 my-4">Login to Geelong Archers</h3>
+    <!-- Alerts -->
+    {% include 'partials/_alerts.html' %}
+    <div class="row">
+        <div class="col-10 col-sm-7 col-md-8 col-lg-6 col-xl-5 m-auto">
+        <div class="card mt-3">
+            <div class="card-header bg-primary"></div>
+            <div class="card-body py-3 px-4">
+                <h3 class="text-center">Sign In</h3>
+                <form action="{% url 'login' %}" method="POST">
+                    {% csrf_token %}
+                    <label for="email">Email</label>
+                    <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                          <span class="input-group-text bg-dark text-primary" id="basic-addon1"><i class="far fa-envelope"></i></span>
+                        </div>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="you@example.com" required aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                    <label for="password">Password</label>
+                    <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                          <span class="input-group-text bg-dark text-primary" id="basic-addon1"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input type="password" name="password" class="form-control" placeholder="password" aria-label="Username" required aria-describedby="basic-addon1">
+                    </div>
+
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="remember_me">
+                        <label class="custom-control-label" for="remember_me">Remember me</label>
+                    </div>
+                    <input type="submit" value="Login" class="btn btn-primary mt-3 btn-block btn-lg">
+                  </form>
+            </div>
+            <div class="card-footer bg-dark rounded-bottom"></div>
+        </div>
+    </div>
+
+
+    </div>
+</div>    
+
+{% endblock %}

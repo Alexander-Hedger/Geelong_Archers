@@ -1,0 +1,25 @@
+
+<!-- Sidebar Events-->
+<div class="card mt-4">
+    <a href="{% url 'events-main' %}">
+      <div class="card-header">
+        <i class="far fa-calendar mr-2"></i>Upcoming Events
+      </div>
+    </a>
+    <div class="card-body pt-3">
+      {% if events %}
+        {% for event in events %}
+        <h5 id="title" class="card-title pb-0 mb-0">{{ event.short_title }}</h5>
+        <small id="date" class="text-muted mt-0 pt-0">{{ event.date_start }}</small>
+        <p id="desc" class="card-text">{{ event.short_description }}</p>
+        {% endfor %}
+      {% else %}
+        <div>
+          <p>No Events Available</p>
+        </div>
+      {% endif %}
+
+    </div>
+</div>
+
+        

@@ -1,0 +1,514 @@
+{% extends 'base.html' %}
+
+{% block title %} | Dashboard {% endblock %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>
+{% endblock %}
+
+{% block content %}
+
+
+
+<div id="dashboard" class="col-12 col-md-8 col-lg-9 pl-4 pr-4">
+    <!-- Alerts -->
+    {% include 'partials/_alerts.html' %}
+    
+    <h3 id="main_title" class="text-center display-4 my-4">{{ user.first_name }}'s Dashboard</h3>
+
+    <div id='user_information' class="row px-3 pt-0">
+        <div id="user_profile" class="col-12 col-lg-9 mx-0 mt-0 mb-3 p-0">
+            <div class="card mr-4 pt-0">
+                <div class="card-header"></div>
+                <div class="card-body pt-3 pr-3 pl-3">
+                    <div class="row">
+                        <div class="col-4 m-0 pr-0">
+                            <img id="display_photo" src="../media/{{ user.photo }}" alt="Image Unavailable" class="img-fluid">
+                        </div>
+                        <div class="col-8 m-0">
+                            <div class="d-flex mb-0 pb-0">
+                                <h3 class="d-inline"><i class="far fa-address-card mr-2"></i>Your Information</h3>
+                                <a id="edit" href="#" data-toggle='modal' data-target='#information' class="ml-auto"><i class="fas fa-edit pt-1 pb-2 pl-2 pr-1 rounded"></i></a>
+                            </div>
+                            <ul class="pl-0">
+                                <li><strong>Name :</strong> {{ user }}</li>
+                                <li><strong>Class :</strong> {{ user.archer_class }}</li>
+                                <li><strong>Division :</strong> {{ user.division }}</li>
+                                <li><strong>AA ID :</strong>  {{ user.archery_australia_id }}</li>
+                                <li><strong>DOB :</strong> {{ user.birth_date }}</li>
+                                <li><strong>Email :</strong> {{ user.email }}</li>
+                                <li><strong>Membership Expiry :</strong> {{ user.member_expiry }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="rating" class="col-6 offset-3 offset-lg-0 col-lg-3 mt-0 mb-3 p-0">
+            <div class="card text-center">
+                <div class="card-header"></div>
+                <div class="card-body p-2">
+                    <h2 class="display-3">84.5</h2>
+                </div>
+                <div class="card-footer bg-dark py-1 text-primary">
+                    <h3>Your Rating</h3>
+                </div>
+            </div>
+            <div class=" text-center mt-4">        
+                <a id="admin_button" href="{% url 'admin_dashboard' %}" class="btn btn-primary btn-lg">Admin Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <div id='member_classifications' class="row mt-3">
+        <div class="col-12 mb-3">
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <h4 class="ml-4 mb-0 mr-auto"><i class="fas fa-bullseye mr-2"></i>Your Classifications</h4>
+                    <div>
+                        <form action="{% url 'dashboard' %}" class="text-center">
+                            <div class="form-group mb-0 d-flex align-items-center text-center">
+                                <input type="hidden" name="request_type" value="classification">
+
+                                <select class="form-control mr-4" name="archer_class" id="archer_class">
+                                    {% for archer_class in archer_classes %}
+                                            <option value='{{archer_class}}'
+                                            {% if values.archer_class %}
+                                                {% if archer_class == values.archer_class %}
+                                                    selected
+                                                {% endif %}
+                                            {% elif archer_class == request.user.archer_class %}
+                                                selected
+                                            {% endif %}
+                                            >{{archer_class}}</option>
+                                    {% endfor %}
+                                </select> 
+
+                                <select class="form-control mr-4" name="division" id="division">
+                                    {% for division in divisions %}
+                                            <option value='{{division}}'
+                                            {% if values.division %}
+                                                {% if division == values.division %}
+                                                    selected
+                                                {% endif %}
+                                            {% elif division == request.user.division %}
+                                                selected
+                                            {% endif %}
+                                            >{{division}}</option>
+                                    {% endfor %}
+                                </select>
+                                <input type="submit" value="Update" class="btn btn-primary btn-sm mr-3">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="collapse show card-body py-0">
+                    <div class="row mt-3">
+
+                        <div id="classification_showcase" class="col-6 col-md-6 col-lg-3 px-1 mb-3">
+                            <div class="card">
+                                <div class="card-header m-0 p-1">
+                                    <h5 class="m-0 p-0">Outdoor</h5>
+                                </div>
+                                {% if Outdoor %}
+                                    {% for classification in Outdoor %}
+                                        <img class="card-img-top p-2" src="../media/{{ classification.classification_id.image }}" alt="Image Missing">
+                                        <div class="card-body d-flex flex-column py-2 bg-dark text-primary">
+                                            <div class="card-title text-center font-weight-bold pb-0 mb-auto">{{ classification.classification }}</div>
+                                            <div class="card-text text-center">{{ Outdoor_score }} more score(s) required for promotion</div>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <img class="card-img-top p-2" src="../media/awards/target_placeholder.png" alt="Image Missing">
+                                    <div class="card-body d-flex flex-column py-2 bg-dark text-primary">
+                                        <div class="card-title text-center font-weight-bold pb-0 mb-auto">No Classification Yet</div>
+                                        <div class="card-text text-center">Shoot 3 events in a calendar year to earn a classification</div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div id="classification_showcase" class="col-6 col-md-6 col-lg-3 px-1 mb-3">
+                            <div class="card">
+                                <div class="card-header m-0 p-1">
+                                    <h5 class="m-0 p-0">Field</h5>
+                                </div>
+                                {% if Field %}
+                                    {% for classification in Field %}
+                                        <img class="card-img-top p-2" src="../media/{{ classification.classification_id.image }}" alt="Image Missing">
+                                        <div class="card-body d-flex flex-column py-2 bg-dark text-primary">
+                                            <div class="card-title text-center font-weight-bold pb-0 mb-auto">{{ classification.classification }}</div>
+                                            <div class="card-text text-center">{{ Field_score }} more score(s) required for promotion</div>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <img class="card-img-top p-2" src="../media/awards/field_placeholder.png" alt="Image Missing">
+                                    <div class="card-body d-flex flex-column py-2 bg-dark text-primary">
+                                        <div class="card-title text-center font-weight-bold pb-0 mb-auto">No Classification Yet</div>
+                                        <div class="card-text text-center">Shoot 3 events in a calendar year to earn a classification</div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div id="classification_showcase" class="col-6 col-md-6 col-lg-3 px-1 mb-3">
+                            <div class="card">
+                                <div class="card-header m-0 p-1">
+                                    <h5 class="m-0 p-0">Indoor</h5>
+                                </div>
+                                {% if Indoor %}
+                                    {% for classification in Indoor %}
+                                        <img class="card-img-top p-2" src="../media/{{ classification.classification_id.image }}" alt="Image Missing">
+                                        <div class="card-body d-flex flex-column py-2 bg-dark text-primary">
+                                            <div class="card-title text-center font-weight-bold pb-0 mb-auto">{{ classification.classification }}</div>
+                                            <div class="card-text text-center">{{ Indoor_score }} more score(s) required for promotion</div>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <img class="card-img-top p-2" src="../media/awards/target_placeholder.png" alt="Image Missing">
+                                    <div class="card-body d-flex flex-column py-2 bg-dark text-primary">
+                                        <div class="card-title text-center font-weight-bold pb-0 mb-auto">No Classification Yet</div>
+                                        <div class="card-text text-center">Shoot 3 events in a calendar year to earn a classification</div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div id="classification_showcase" class="col-6 col-md-6 col-lg-3 px-1 mb-3">
+                            <div class="card">
+                                <div class="card-header m-0 p-1">
+                                    <h5 class="m-0 p-0">Clout</h5>
+                                </div>
+                                {% if Clout %}
+                                    {% for classification in Clout %}
+                                        <img class="card-img-top p-2" src="../media/{{ classification.classification_id.image }}" alt="Image Missing">
+                                        <div class="card-body d-flex flex-column py-2 bg-dark text-primary">
+                                            <div class="card-title text-center font-weight-bold pb-0 mb-auto">{{ classification.classification }}</div>
+                                            <div class="card-text text-center">{{ Clout_score }} more score(s) required for promotion</div>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <img class="card-img-top p-2" src="../media/awards/clout_placeholder.png" alt="Image Missing">
+                                    <div class="card-body d-flex flex-column py-2 bg-dark text-primary">
+                                        <div class="card-title text-center font-weight-bold pb-0 mb-auto">No Classification Yet</div>
+                                        <div class="card-text text-center">Shoot 3 events in a calendar year to earn a classification</div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='member_unclaimed_awards' class="row mt-3">
+        <div class="col-12 mb-3">
+            <div class="card">
+                <a id="unclaimed_toggle" class="card-header d-flex align-items-center text-decoration-none" data-toggle="collapse" href="#unclaimed_awards" role="button">
+                    <h4 class="ml-4 mb-0 mr-auto"><i class="fas fa-trophy mr-2"></i>Your Unclaimed Awards</h4>
+                    <i id="chevron" class="fas fa-chevron-up ml-auto mr-4"></i>
+                </a>
+                <div id="unclaimed_awards" class="collapse show card-body pt-1">
+                    <div class="row">
+                        {% if unclaimed_awards%}
+                            {% for award in unclaimed_awards %}
+                                <div class="col-6 col-sm-4 col-md-6 col-lg-4 col-xl-3 px-2 mb-2">
+
+                                    <div class="card">
+                                        <div class="card-header p-2 m-0"></div>
+                                        <div class="row no-gutters">
+                                            <div class="col-4 bg-white d-flex align-items-center">
+                                                <div id="card-image m-0" >
+                                                    <img class="card-img p-1 bg-white my-auto" src="../media/{{ award.award.image }}" alt="Image Missing">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-8">
+                                                <div class="card-body p-2">
+                                                    <div class="card-title text-center font-weight-bold text-dark">{{ award.award.name }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer p-2 m-0"></div>
+                                  </div>
+
+                                    <!-- <div class="card">
+                                        <div class="card-header bg-dark ">
+                                        </div>
+                                        <img class="card-img-top" src="../media/{{ award.award.image }}" alt="Image Missing">
+                                        <div class="card-body d-flex flex-column py-1 bg-dark text-primary">
+                                            <div class="card-title text-center font-weight-bold pb-0 mb-auto">{{ award.award.name }}</div>
+                                            <div class="card-text text-center">{{ award.date_recieved }}</div>
+                                        </div>
+                                    </div> -->
+
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="pt-2 mb-0 pb-0 ml-3">No Awards Available</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='member_awards' class="row mt-3">
+        <div class="col-12 mb-3">
+            <div class="card">
+                <a id="award_toggle" class="card-header d-flex align-items-center text-decoration-none" data-toggle="collapse" href="#award_showcase" role="button">
+                    <h4 class="ml-4 mb-0 mr-auto"><i class="fas fa-trophy mr-2"></i>Your Awards</h4>
+                    <i id="chevron" class="fas fa-chevron-up ml-auto mr-4"></i>
+                </a>
+                <div id="award_showcase" class="collapse show card-body pt-1">
+                    <div class="row">
+                        {% if member_awards%}
+                            {% for award in member_awards %}
+                                <div id="award_display" class="col-4 col-sm-3 col-md-4 col-lg-3 col-xl-2 px-1 mb-2">
+                                    <div class="card">
+                                        <div class="card-header bg-dark ">
+                                        </div>
+                                        <img class="card-img-top" src="../media/{{ award.award.image }}" alt="Image Missing">
+                                        <div class="card-body d-flex flex-column py-1 bg-dark text-primary">
+                                            <div class="card-title text-center font-weight-bold pb-0 mb-auto">{{ award.award.name }}</div>
+                                            <div class="card-text text-center">{{ award.date_recieved }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="pt-2 mb-0 pb-0 ml-3">No Awards Available</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id='member_event_history' class="row mt-3">
+        <div class="col-12 mb-5">
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <h4 class="ml-4 mb-0 mr-auto"><i class="far fa-calendar-check mr-2"></i>Your Event History</h4>
+                    <div>
+                        <form action="{% url 'dashboard' %}" class="text-center" method='POST'>
+                            {% csrf_token %}
+                            <div class="form-group mb-0 d-flex align-items-center text-center">
+                                <input type="submit" value="Update Your Events" class="btn btn-primary btn-sm mr-3">
+                                <input type="hidden" name="request_type" value="update">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="d-none d-lg-block">
+                    <div class="card-body pt-1">
+                        <table id="event_history" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="width: 25%">Event</th>
+                                    <th style="width: 15%">Round</th>
+                                    <th class="text-center" style="width: 10%">Discipline</th>
+                                    <th class="text-center" style="width: 10%">Date</th>
+                                    <th class="text-center" style="width: 10%">Class</th>
+                                    <th class="text-center" style="width: 14%">Division</th>
+                                    <th class="text-center" style="width: 8%">Score</th>
+                                    <th class="text-center" style="width: 8%">Rating</th>
+                                    <th class="text-center" style="width: 8%">Awards</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if event_history %}
+                                    {% for event in event_history%}
+                                            <tr>
+                                                <td><a href="#" class="text-secondary" data-toggle='modal' data-target="#scorecard" data-name='{{ event.event_name }}' data-link="{{ event.link }}">{{ event.event_name }}</a></td>
+                                                <td>{{ event.archery_round }}</td>
+                                                <td class="text-center">{{ event.discipline }}</td>
+                                                <td class="text-center">{{ event.date|date:'d/m/y' }}</td>
+                                                <td class="text-center">{{ event.archer_class }}</td>
+                                                <td class="text-center">{{ event.division }}</td>
+                                                <td class="text-center">{{ event.score }}</td>
+                                                <td class="text-center">{{ event.rating }}</td>
+                                                <td class="text-center">{{ event.total_awards }}</td>
+                                            </tr>
+                                       
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td>No Events Available</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="d-block d-lg-none">
+                    <div class="card-body pt-1">
+                        <table id="event_history_mobile" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="width: 25%">Event</th>
+                                    <th class="text-center" style="width: 10%">Date</th>
+                                    <th class="text-center" style="width: 8%">Score</th>
+                                    <th class="text-center" style="width: 8%">Rating</th>
+                                    <th class="text-center" style="width: 8%">Awards</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if event_history %}
+                                    {% for event in event_history%}
+                                            <tr>
+                                                <td><a href="#" class="text-secondary" data-toggle='modal' data-target="#scorecard" data-name='{{ event.event_name }}' data-link="{{ event.link }}">{{ event.event_name }}</a></td>
+                                                <td class="text-center">{{ event.date|date:'d/m/y' }}</td>
+                                                <td class="text-center">{{ event.score }}</td>
+                                                <td class="text-center">{{ event.rating }}</td>
+                                                <td class="text-center">{{ event.total_awards }}</td>
+                                            </tr>
+                                       
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td>No Events Available</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="modal fade" id="scorecard" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-header text-center mb-0">
+                    <h4 id='modal_title' class="text-center mb-0">Scorecard</h4>
+                </div>
+                <div class="card-body p-0 m-0">
+                    <div class="card-body bg-white embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="#"></iframe>
+                    </div>
+                </div>
+                <div class="card-footer bg-dark d-flex justify-content-end py-2">
+                    <button type="button" class="btn btn-primary text-dark" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="information" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <form action="{% url 'account_update' %}" method='POST' enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="card bg-white">
+                    <div class="card-header text-center mb-0">
+                        <h3 class="d-inline"><i class="far fa-address-card mr-2"></i>Your Information</h3>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label font-weight-bold pl-3 pr-0" for="user_class">Class</label>
+                            <div class="col-8">
+                                <select class="form-control mr-3" name="user_class" id="user_class">
+                                    {% for archer_class in archer_classes %}
+                                        <option value='{{archer_class}}'
+                                    {% if archer_class == request.user.archer_class %}
+                                        selected
+                                    {% endif %}
+                                    >{{archer_class}}</option>
+                                    {% endfor %}
+                                </select> 
+                            </div>
+                        </div>
+ 
+                        <div class="form-group row mb-0">
+                            <label class="col-2 col-form-label font-weight-bold pl-3 pr-0" for="user_division">Division</label>
+                            <div class="col-8">
+                                <select class="form-control mr-3" name="user_division" id="user_division">
+                                    {% for division in divisions %}
+                                        <option value='{{division}}'
+                                    {% if division == request.user.division %}
+                                        selected
+                                    {% endif %}
+                                    >{{division}}</option>
+                                {% endfor %}
+                                </select> 
+                            </div>
+                        </div>
+
+                        <div class="form-group row p-3 mb-0">
+                            <label class="font-weight-bold" for="user_email">Email</label>
+                            <input type="email" class="form-control" name="user_email" id="user_email" value="{{ user.email}}">
+                        </div>
+                        <div class="form-group row px-3 mb-0">
+                            <label class="font-weight-bold" for="user_photo">Photo</label>
+                            <input type="file" class="form-control-file" name="user_photo" id="user_photo">
+                            <small id="short_title_help" class="form-text text-muted">By uploading a display photo you agree that this image may be used on the Geelong Archers Website and official social media pages</small>     
+                        </div>
+
+                    </div>
+                    <div class="card-footer bg-dark d-flex justify-content-end py-2">
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary text-dark ml-3">Update</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block dependancies %} 
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#event_history').DataTable({
+            
+            'ordering' : false
+            
+        });
+        $('#event_history_mobile').DataTable({
+            
+            'ordering' : false,
+            
+        });
+
+    } );
+
+    $('#scorecard').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var name = button.data('name')
+        var link = button.data('link')
+           
+        // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('#modal_title').text(name)
+        modal.find('iframe').attr('src', link)
+      });
+      
+    $('#award_showcase').on('shown.bs.collapse', function() {
+        $("#chevron").addClass('fa-chevron-up').removeClass('fa-chevron-down');
+        });
+    
+    $('#award_showcase').on('hidden.bs.collapse', function() {
+        $("#chevron").addClass('fa-chevron-down').removeClass('fa-chevron-up');
+        });
+  
+</script>
+{% endblock %}

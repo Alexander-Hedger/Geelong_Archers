@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+
+{% block title %} | Documents {% endblock %}
+
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>
+{% endblock %}
+
+{% block content %}
+<div id="minutes_main" class="col-12 col-md-8 col-lg-9 pl-4 pr-4">
+    <h3 id="main_title" class="text-center display-4 my-4">Documents</h3>
+    
+    <div class="row">
+        <div class="col-12 mb-5">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h4 class="ml-4 mb-0"><i class="fas fa-file-alt mr-2"></i>Committee Minutes</h4>
+                </div>
+                <div class="card-body pt-1">
+                    <table id="committee_table" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="width: 50%">Minutes</th>
+                                <th style="width: 25%" class="text-center">Published</th>
+                                <th style="width: 25%" class="text-center">Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if committee_minutes %}
+                                {% for minutes in committee_minutes %}
+                                        <tr>
+                                            <td><a href="#" data-toggle='modal' data-target="#minutes_modal" data-title='{{minutes.title}}' data-minutes="{{ minutes.minutes.url }}" class="text-secondary">{{ minutes.title }}</a></td>
+                                            <td class="text-center">{{ minutes.date_published }}</td>
+                                            <td class="d-flex justify-content-center"><a href="{{ minutes.minutes.url }}" download class="btn btn-primary btn-sm align-self-center">Download</a></td>
+                                        </tr>
+                                        
+                                {% endfor %}
+                            {% else %}
+                            <div>
+                                <tr>
+                                    <td>No Minutes Available</td>
+                                </tr>
+                            </div>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 mb-5">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="ml-4 mb-0"><i class="fas fa-file-alt mr-2"></i>AGM Minutes</h4>  
+                </div>
+                <div class="card-body pt-1">
+                    <table id="agm_table" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="width: 50%">Minutes</th>
+                                <th style="width: 25%" class="text-center">Published</th>
+                                <th style="width: 25%" class="text-center">Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if agm_minutes %}
+                                {% for minutes in agm_minutes %}
+                                        <tr>
+                                            <td><a href="#" data-toggle='modal' data-target="#minutes_modal" data-title='{{minutes.title}}' data-minutes="{{ minutes.minutes.url }}" class="text-secondary">{{ minutes.title }}</a></td>
+                                            <td class="text-center">{{ minutes.date_published }}</td>
+                                            <td class="d-flex justify-content-center"><a href="{{ minutes.minutes.url }}" download class="btn btn-primary btn-sm align-self-center">Download</a></td>
+                                        </tr>
+                                        
+                                {% endfor %}
+                            {% else %}
+                                <div>
+                                    <tr>
+                                        <td>No Minutes Available</td>
+                                    </tr>
+                                </div>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="documents">    
+        <div class="accordion" id="accordionExample">
+    
+            <div class="card mb-3">
+              <div class="card-header">
+                <h4 class="mb-0 d-flex align-items-baseline">
+                  <button class="btn btn-link ml-4" type="button" data-toggle="collapse" data-target="#by-laws" aria-expanded="true" aria-controls="collapseOne">
+                    By-Laws
+                  </button>
+                  <small class="d-inline text-muted" type="button" data-toggle="collapse" data-target="#by-laws">(Click to expand)</small>
+                  <a href="{% static 'docs/GA_By-Laws_Version_8_June_2019.pdf' %}" download class="btn btn-primary btn-sm ml-auto mr-5 align-self-center">Download</a>
+                </h4>
+              </div>
+          
+              <div id="by-laws" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="{% static 'docs/GA_By-Laws_Version_8_June_2019.pdf' %}"></iframe>
+                </div>
+              </div>
+            </div>
+    
+            <div class="card mb-3">
+                <div class="card-header">
+                  <h4 class="mb-0 d-flex align-items-center">
+                    <button class="btn btn-link ml-4 collapsed" type="button" data-toggle="collapse" data-target="#code_of_conduct" aria-expanded="true" aria-controls="collapseOne">
+                      Code of Conduct
+                    </button>
+                    <small class="d-inline text-muted" type="button" data-toggle="collapse" data-target="#code_of_conduct">(Click to expand)</small>
+                    <a href="{% static 'docs/Code_of_Conduct.pdf' %}" download class="btn btn-primary btn-sm ml-auto mr-5 align-self-center">Download</a>
+                  </h4>
+                </div>
+            
+                <div id="code_of_conduct" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body embed-responsive embed-responsive-16by9">
+                      <iframe class="embed-responsive-item" height="1000" src="{% static 'docs/Code_of_Conduct.pdf' %}"></iframe>
+                  </div>
+                </div>
+              </div>
+    
+              <div class="card mb-3">
+                <div class="card-header">
+                  <h4 class="mb-0 d-flex align-items-center">
+                    <button class="btn btn-link ml-4 collapsed" type="button" data-toggle="collapse" data-target="#rules_of_association" aria-expanded="true" aria-controls="collapseOne">
+                      Rules of Association
+                    </button>
+                    <small class="d-inline text-muted" type="button" data-toggle="collapse" data-target="#rules_of_association">(Click to expand)</small>
+                    <a href="{% static 'docs/GA_Rules_of_Asociation_2018.pdf' %}" download class="btn btn-primary btn-sm ml-auto mr-5 align-self-center">Download</a>
+                  </h4>
+                </div>
+            
+                <div id="rules_of_association" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body embed-responsive embed-responsive-16by9">
+                      <iframe class="embed-responsive-item" src="{% static 'docs/GA_Rules_of_Asociation_2018.pdf' %}"></iframe>
+                  </div>
+                </div>
+              </div>
+    
+              <div class="card mb-3">
+                <div class="card-header">
+                  <h4 class="mb-0 d-flex align-items-center">
+                    <button class="btn btn-link ml-4 collapsed" type="button" data-toggle="collapse" data-target="#risk_management" aria-expanded="true" aria-controls="collapseOne">
+                      Risk Management
+                    </button>
+                    <small class="d-inline text-muted" type="button" data-toggle="collapse" data-target="#risk_management">(Click to expand)</small>
+                    <a href="{% static 'docs/GA_Risk_Management_2020.pdf' %}" download class="btn btn-primary btn-sm ml-auto mr-5 align-self-center">Download</a>
+                  </h4>
+                </div>
+            
+                <div id="risk_management" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body embed-responsive embed-responsive-16by9">
+                      <iframe class="embed-responsive-item" src="{% static 'docs/GA_Risk_Management_2020.pdf' %}"></iframe>
+                  </div>
+                </div>
+              </div>
+    
+          </div>
+    </div>   
+</div>
+
+<div class="modal fade" id="minutes_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-header text-center mb-0">
+                    <h4 id='modal_title' class="text-center mb-0">title</h4>
+                </div>
+                <div class="card-body p-0 m-0">
+                    <div class="card-body embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="#"></iframe>
+                    </div>
+                </div>
+                <div class="card-footer bg-dark d-flex justify-content-end py-2">
+                    <a href="#" download class="btn btn-outline-primary text-primary">Download</a>
+                    <button type="button" class="btn ml-3 btn-primary text-dark" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+
+{% endblock %}
+
+{% block dependancies %} 
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $('#committee_table').DataTable({
+            'ordering' : false
+        });
+
+        $('#agm_table').DataTable({
+            'ordering' : false
+        });
+
+    } );
+
+    $('#minutes_modal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var title = button.data('title')
+        var minutes = button.data('minutes')
+           
+        // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('#modal_title').text(title)
+        modal.find('iframe').attr('src', minutes)
+        modal.find('a').attr('href', minutes)
+      })
+
+</script>
+{% endblock %}
+
+

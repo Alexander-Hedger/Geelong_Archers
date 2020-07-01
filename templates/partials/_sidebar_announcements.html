@@ -1,0 +1,24 @@
+<!-- Sidebar Announcements-->
+
+<div class="card mt-4">
+    <a href="{% url 'announcements-main' %}">
+      <div class="card-header">
+        <span><i class="fas fa-bullhorn mr-2"></i>Announcements</span> 
+      </div>
+    </a>
+    
+    <div class="card-body pt-3">
+      {% if announcements %}
+        {% for announcement in announcements %}
+          <h5 id="title" class="card-title pb-0 mb-0">{{ announcement.short_title }}</h5>
+          <small id="date" class="text-muted mt-0 pt-0">{{ announcement.date_published }}</small>
+          <p id="desc" class="card-text">{{ announcement.short_announcement }}</p>
+        {% endfor %}
+      {% else %}
+        <div>
+          <p>No Announcements Available</p>
+        </div>
+      {% endif %}
+      
+    </div>
+  </div>

@@ -1,0 +1,110 @@
+{% load static %}
+<!-- Navbar -->
+<nav id="navbar_container" class="navbar sticky-top navbar-primary navbar-expand-xl p-2">
+    <a class="navbar-brand mr-5 py-0" href="{% url 'home' %}">GEELONG ARCHERS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse navbar-primary" id="mainNavbar">
+      <ul class="navbar-nav mr-auto">
+
+        <li {% if '/' == request.path %}
+                class="nav-item active "
+            {% else %}
+                class="nav-item "
+            {% endif %}>
+            
+            <a class="nav-link justify-self-end" href="{% url 'home' %}">Home </span></a>
+        </li>
+
+        <li {% if '/contact' == request.path %}
+                class="nav-item active "
+            {% else %}
+                class="nav-item "
+            {% endif %}>
+            
+            <a class="nav-link" href="{% url 'contact' %}">Contact</span></a>
+        </li>
+
+        <li {% if '/upcoming_events' == request.path %}
+                class="nav-item active "
+            {% else %}
+                class="nav-item "
+            {% endif %}>
+            
+            <a class="nav-link" href="{% url 'events-main' %}">Events </span></a>
+        </li>
+
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            About
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'facilities' %}">Club Facilities</a>
+            <a class="dropdown-item" href="{% url 'store-main' %}">Club Merchandise</a>
+            <a class="dropdown-item" href="{% url 'committee' %}">Committee Members</a>
+            <a class="dropdown-item" href="{% url 'life_member' %}">Life Members</a>
+            <a class="dropdown-item" href="{% url 'history' %}">History of the Club</a>
+            <a class="dropdown-item" href="{% url 'gallery-main' %}">Gallery</a>
+            <a class="dropdown-item" href="{% url 'minutes-main' %}">Documents</a>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown ">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Info Hub
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'about_archery' %}">About Archery</a>
+              <a class="dropdown-item" href="{% url 'intro_course_info' %}">Beginners Courses</a>
+              <a class="dropdown-item" href="{% url 'faq' %}">FAQ</a>
+              <a class="dropdown-item" href="{% url 'archers_diary' %}">How to use Archer's diary</a>
+              <a class="dropdown-item" href="{% url 'equipment' %}">Hiring Equipment</a>
+            </div>
+          </li>
+
+          <li class="nav-item dropdown ">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Coaching Corner
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'wiki-main' %}">Archery Basics</a>
+              <a class="dropdown-item" href="{% url 'maintenance' %}">Equipment Maintenance</a>
+              <a class="dropdown-item" href="{% url 'fletching' %}">How To: Fletching</a>
+              <a class="dropdown-item" href="{% url 'string_making' %}">How To: String Making</a>
+              <a class="dropdown-item" href="{% url 'bowpress' %}">How To: Bow Press</a>
+              <a class="dropdown-item" href="{% url 'arrow_cutter' %}">How To: Arrow Cutting</a>
+              <a class="dropdown-item" href="{% url 'nocking' %}">How To: Nocking Points</a>
+            </div>
+          </li>
+	  </ul>
+
+	  <ul id="nav_account" class="navbar-nav mr-3">
+      
+      {% if user.is_authenticated %}
+      <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard' %}"><i class="fas fa-columns mr-2"></i>Welcome {{ user.first_name }} (Dashboard)</span></a>
+      </li>
+      <li class="nav-item ">
+        <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <form action="{% url 'logout' %}" method="POST" id="logout">
+          {% csrf_token %}
+          <input type="hidden">
+        </form>
+      </li>
+
+      {% else %}
+        <li {% if '/login' == request.path %}
+              class="nav-item active "
+            {% else %}
+              class="nav-item "
+            {% endif %}>
+              <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt mr-2"></i>Login</span></a>
+        </li>
+      {% endif %}
+    
+
+	  </ul>
+    </div>
+  </nav>

@@ -15,8 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', include('pages.urls')),
+    path('', include('announcements.urls')),
+    path('events/', include('events.urls')),
+    path('account/', include('accounts.urls')),
+    path('contact/', include('contact_forms.urls')),
+    path('', include('awards.urls')),
+    path('', include('gallery.urls')),
+    path('', include('minutes.urls')),
+    path('', include('rankings.urls')),
+    path('', include('store.urls')),
+    path('', include('custom_admin.urls')),
     path('admin/', admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

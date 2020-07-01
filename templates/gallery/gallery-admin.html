@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %} | Gallery Admin {% endblock %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>
+{% endblock %}
+
+{% block content %}
+<div id="gallery" class="col-12 col-md-8 col-lg-9 pl-4 pr-4">
+    <!-- Alerts -->
+    {% include 'partials/_alerts.html' %}
+    <h3 id="main_title" class="text-center display-4 my-4">Gallery Admin Dashboard</h3>
+    <div class="row px-3 pt-0 mb-4">
+        <div class="card col-12 p-0">
+            <div class="card-header d-flex align-items-center">
+                <h4 class="ml-4 mb-0"><i class="fas fa-images mr-2"></i>Albums</h4>
+                <a href="{% url 'gallery-create' %}" class="btn btn-primary btn-sm ml-auto mr-4 align-self-center">Create New</a>
+            </div>
+            <div class="card-body">
+                <table id="album_table" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%"></th>
+                            <th style="width: 35%">Title</th>
+                            <th style="width: 10%" class="text-center">Photos</th>
+                            <th style="width: 10%" class="text-center">Published</th>
+                            <th style="width: 10%" class="text-center">Last Changed</th>
+                            <th style="width: 10%" class="text-center">Edit</th>
+                            <th style="width: 10%" class="text-center">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if albums %}
+                            {% for album in albums %}
+                                <tr>
+                                    <td class="text-center align-middle"><img id="admin_thumbnail" src="../media/{{album.feature_image.thumbnail}}" alt="missing" class="img-thumbnail img-fluid"></td>
+                                    <td>{{album.title}}</td>
+                                    <td class="text-center">{{album.quantity}}</td>
+                                    <td class="text-center">{{album.date_uploaded}}</td>
+                                    <td class="text-center"{{album.date_changed}}</td>
+                                    <td class="text-center"><a href="{% url 'gallery-edit' album.id %}" class="btn btn-primary btn-sm align-self-center">Edit</a></td>
+                                    <td class="text-center">
+                                        <form class='d-inline' method='POST' action="{% url 'gallery-delete' album.pk %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger btn-sm align-self-center">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td class="text-center"><i class="fas fa-image fa-3x"></i></td>
+                                <td>No Galleries Available</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>    
+
+{% endblock %}
+
+{% block dependancies %} 
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#album_table').DataTable({
+            
+            'ordering' : false
+            
+        });
+
+    } );
+</script>
+{% endblock %}

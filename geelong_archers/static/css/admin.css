@@ -1,0 +1,48 @@
+#header {
+	height: 50px;
+	background: #282828;
+	color: #00d9ff;
+}
+
+#branding h1 {
+	color: #00d9ff;
+}
+
+a:link,
+a:visited {
+	color: #282828;
+}
+
+div.breadcrumbs,
+div.breadcrumbs a:link,
+div.breadcrumbs a:visited {
+	background: #00d9ff;
+	color: #282828;
+}
+
+div.breadcrumbs a:link:hover,
+div.breadcrumbs a:visited:hover {
+	border-bottom: 2px solid #282828;
+}
+
+div.breadcrumbs a {
+	color: #00d9ff;
+}
+
+.module h2,
+.module caption,
+caption a.section:link,
+caption a.section:visited,
+.inline-group h2 {
+	background: #282828;
+	color: #00d9ff;
+}
+
+.button,
+input[type=submit],
+input[type=button],
+.submit-row input,
+a.button {
+	background: #282828;
+	color: #00d9ff;
+}
