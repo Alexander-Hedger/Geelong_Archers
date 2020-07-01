@@ -29,16 +29,17 @@ def admin_dashboard(request):
     events_intro = EventIntro.objects.order_by(
         'date_start')
 
-    try:
-        intro_course_id = request.GET['intro_filter']
-        event = EventIntro.objects.get(short_title=intro_course_id)
-        contacts_intro = ContactIntro.objects.order_by(
-            'contact_date').filter(event_id=event)
-    except:
-        event = events_intro.first()
-        print(event.date_start)
-        contacts_intro = ContactIntro.objects.order_by(
-            'contact_date').filter(event_id=event)
+    if events_intro.exists():
+        try:
+            intro_course_id = request.GET['intro_filter']
+            event = EventIntro.objects.get(short_title=intro_course_id)
+            contacts_intro = ContactIntro.objects.order_by(
+                'contact_date').filter(event_id=event)
+        except:
+            event = events_intro.first()
+            print(event.date_start)
+            contacts_intro = ContactIntro.objects.order_by(
+                'contact_date').filter(event_id=event)
 
     context['events_comp'] = events_comp
     context['events_intro'] = events_intro
