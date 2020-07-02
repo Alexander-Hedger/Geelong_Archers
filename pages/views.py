@@ -3,6 +3,7 @@ from . import views
 from announcements.models import Announcement
 from functions.functions import sidebar
 from pages.models import PageContent
+from accounts.models import Committee
 
 
 def about_archery(request):
@@ -53,6 +54,10 @@ def by_laws(request):
 
 def committee(request):
     context = sidebar()
+
+    committee = Committee.objects.order_by(
+        'position')
+    context['committee'] = committee
 
     page = PageContent.objects.get(name='committee')
     context['page'] = page

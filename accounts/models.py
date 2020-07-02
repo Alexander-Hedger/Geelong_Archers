@@ -103,6 +103,7 @@ class Committee(models.Model):
         Account, on_delete=models.DO_NOTHING, blank=True, null=True)
     short_desc = models.CharField(max_length=250, blank=True)
     email = models.EmailField(max_length=150, blank=True)
+    order = models.IntegerField(blank=True)
 
     def __str__(self):
         return self.position
