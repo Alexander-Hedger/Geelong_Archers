@@ -56,7 +56,7 @@ def committee(request):
     context = sidebar()
 
     committee = Committee.objects.order_by(
-        'position')
+        'order')
     context['committee'] = committee
 
     page = PageContent.objects.get(name='committee')
