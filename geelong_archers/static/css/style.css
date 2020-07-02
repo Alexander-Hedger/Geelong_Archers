@@ -7908,7 +7908,8 @@ body {
   font-family: lato;
   font-weight: 700;
   margin-top: 1.5rem;
-  margin-bottom: 1.5rem; }
+  margin-bottom: 1.5rem;
+  font-size: 3rem; }
 
 #footer {
   background: #282828;
@@ -8155,6 +8156,10 @@ body {
   height: 50vh;
   background: black; }
 
+@media (max-width: 576px) {
+  #main_title {
+    margin-bottom: 1rem;
+    font-size: 2rem; } }
 @media (max-width: 768px) {
   #documents small {
     font-size: 0.7rem; }
