@@ -3,7 +3,7 @@ from . import views
 from announcements.models import Announcement
 from functions.functions import sidebar
 from pages.models import PageContent
-from accounts.models import Committee
+from accounts.models import Committee, LifeMember
 
 
 def about_archery(request):
@@ -148,6 +148,10 @@ def intro_course_info(request):
 
 def life_member(request):
     context = sidebar()
+
+    members = LifeMember.objects.order_by(
+        'year_made')
+    context['members'] = members
 
     page = PageContent.objects.get(name='life_member')
     context['page'] = page

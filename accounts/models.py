@@ -112,12 +112,12 @@ class Committee(models.Model):
 class LifeMember(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=100)
-    year_made = models.IntegerField(blank=True)
-    date_active_start = models.IntegerField(blank=True)
-    date_active_end = models.IntegerField(blank=True)
-    photo = models.ImageField(upload_to='photos/users', blank=True)
-    short_desc = models.CharField(max_length=250, blank=True)
-    long_desc = models.TextField(blank=True)
+    year_made = models.IntegerField(blank=True, null=True)
+    date_active_start = models.CharField(max_length=10, blank=True, null=True)
+    date_active_end = models.CharField(max_length=10, blank=True, null=True)
+    photo = models.ImageField(upload_to='photos/users', blank=True, null=True)
+    short_desc = models.CharField(max_length=250, blank=True, null=True)
+    long_desc = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
