@@ -28,17 +28,20 @@
     
         </ul>
 
-        <ul id="nav_cart" class="navbar-nav mr-3 align-middle">
-            <li class="d-flex align-items-end">
-                <div class="d-flex align-items-center">
-                    <div id="count" class="text-dark px-2">{{ request.user|cart_item_count }}</div>
-                </div>
-            </li>
-            <li>
-
-                <i class="fas fa-shopping-cart fa-2x"></i>
-            </li>
-        </ul>
+        <a href="{% url 'store-order-summary' %}">
+            <ul id="nav_cart" class="navbar-nav mr-3 align-middle">
+                
+                    <li class="d-flex align-items-end">
+                        <div class="d-flex align-items-center">
+                            <div id="count" class="text-dark px-2">{{ request.user|cart_item_count }}</div>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-shopping-cart fa-2x"></i>
+                    </li>
+            
+            </ul>
+        </a>
         </div>
     </nav>
 

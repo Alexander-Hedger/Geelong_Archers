@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% load cart_template_tags %}
+
+{% block title %} | Store {% endblock %}
+
+{% block content %}
+
+
+<div id="store" class="col-12 col-md-8 col-lg-9 pl-4 pr-4">
+    
+    <!-- Alerts -->
+    <div class="col-12 col-md-8 col-lg-6 mx-auto mt-3 p-0 m-0">
+        {% include 'partials/_alerts.html' %}
+    </div>
+    
+    <h3 id="main_title" class="text-center display-4 my-4">Geelong Archers Shop</h3>
+    
+    <!-- Navbar -->
+    <nav id="navbar_container" class="navbar navbar-primary navbar-expand p-2">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse navbar-primary" id="mainNavbar">
+        <ul class="navbar-nav mr-auto">
+    
+            <li class="nav-item dropdown ">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Categories
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'facilities' %}">All</a>
+                <a class="dropdown-item" href="{% url 'store-main' %}">Apparel</a>
+                <a class="dropdown-item" href="{% url 'committee' %}">Equipment</a>
+                <a class="dropdown-item" href="{% url 'life_member' %}">Other</a>
+            </div>
+            </li>
+    
+        </ul>
+    
+        <ul id="nav_cart" class="navbar-nav mr-3 align-middle">
+            <li class="d-flex align-items-end">
+                <div class="d-flex align-items-center">
+                    <div id="count" class="text-dark px-2">{{ request.user|cart_item_count }}</div>
+                </div>
+            </li>
+            <li>
+
+                <i class="fas fa-shopping-cart fa-2x"></i>
+            </li>
+        </ul>
+        </div>
+    </nav>
+
+    <!-- order summary -->
+    <div class="row d-flex align-items-stretch mx-2 py-4">
+    {% if order %}
+        <div class="table-responsive text-nowrap">
+            <h2>Order Summary</h2>
+            <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Item</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total Item Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order_item in order.items.all %}
+                    <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{order_item.item.title}}</td>
+                    <td>${{order_item.item.price}}</td>
+                    <td>
+                        <a href="{% url 'remove-single-item-from-cart' order_item.item.slug %}"><i class="fas fa-minus mr-2"></i></a>
+                        {{order_item.quantity}}
+                        <a href="{% url 'add-single-item-to-cart' order_item.item.slug %}"><i class="fas fa-plus ml-2"></i></a>
+                    </td>
+                    <td>
+                    {% if order_item.item.discount_price %}
+                        ${{ order_item.get_total_discount_item_price}}
+                        <span class="badge badge-primary">Saving ${{order_item.get_amount_saved}}</span>
+
+                    {% else %}
+                        ${{ order_item.get_total_item_price}}
+                    {% endif %}
+                    <a href="{% url 'remove-from-cart' order_item.item.slug %}"><i class="fas fa-trash-alt float-right text-danger"></i></a>
+                    </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan='5'>Your cart is empty</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <a class="btn btn-primary float-right" href="{% url 'store-main' %}">Continue Shopping</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                {% if order.get_total %}
+                    <tr>
+                        <td colspan="3"></td>
+                        <td class="text-right"><b>Order Total:</b></td>
+                        <td><b>${{ order.get_total }}</b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <a class="btn btn-success float-right ml-2" href="{% url 'store-checkout' %}">Proceed to Checkout</a>
+                            <a class="btn btn-primary float-right" href="{% url 'store-main' %}">Continue Shopping</a>
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+            </table>
+        
+        </div>
+    {% else %}
+        <div>
+        <p>No items in Cart</p>
+        </div>
+    {% endif %} 
+    </div>
+
+</div>
+
+{% endblock %}

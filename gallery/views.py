@@ -56,7 +56,7 @@ def gallery_create(request):
 def gallery_main(request):
     context = sidebar()
 
-    albums = Album.objects.order_by('title')
+    albums = Album.objects.order_by('title').filter(hidden=False)
 
     context['albums'] = albums
 
@@ -138,6 +138,12 @@ def gallery_edit(request, album_id):
 
         else:
             album.title = request.POST['album_title']
+
+            if request.POST.get('album_hidden'):
+                album.hidden = True
+            else:
+                album.hidden = False
+
             album.save()
             return redirect('gallery-admin')
 

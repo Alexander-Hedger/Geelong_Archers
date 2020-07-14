@@ -158,6 +158,10 @@ AUTH_USER_MODEL = 'accounts.Account'
 # Clickjacking protection changed from deny to allowed iframe from same origin
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
+
+STRIPE_PUBLIC_KEY = 'pk_test_51H0dbuEzN3Vgf8p6nRQ3QMdT9ZdcmLTtfCqbcey0krLRKAScHDbE7Qtdc8HkRUrb9tmTvZnDyGr1yWhcq0rl1Ezy00c0q5EQHo'
+STRIPE_SECRET_KEY = 'sk_test_51H0dbuEzN3Vgf8p63Be79PRYMMQ0l5k60Zg1AX0zsEo4drQ52JJEJgrANaLKWHNgGU3ae1p0UxUotZ4TUy4ZZGGY00qHncpF3b'
+
 try:
     from .local_settings import *
 except ImportError:

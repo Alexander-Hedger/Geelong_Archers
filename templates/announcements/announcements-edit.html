@@ -53,8 +53,12 @@
                             <small id="short_description_help" class="form-text text-muted">Limit 250 Characters</small>
                         </div>
                         <div class="custom-control custom-checkbox">
-                        <input type="checkbox" name="announcement_published" {% if announcement.is_published == True %} checked='checked' {% endif %} class="custom-control-input" id="announcement_published">
-                        <label class="custom-control-label" for="announcement_published">Published</label>
+                            <input type="checkbox" name="announcement_published" {% if announcement.is_published == True %} checked='checked' {% endif %} class="custom-control-input" id="announcement_published">
+                            <label class="custom-control-label" for="announcement_published">Published</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" name="announcement_members_only" {% if announcement.members_only == True %} checked='checked' {% endif %} class="custom-control-input" id="announcement_members_only">
+                            <label class="custom-control-label" for="announcement_members_only">Members Only</label>
                         </div>
                         <div class="form-group text-right my-0 py-0">
                             <a href="{% url 'announcements-admin' %}" class="btn btn-outline-danger btn-lg mr-3 ml-auto">Cancel</a>

@@ -101,6 +101,15 @@ def faq(request):
     return render(request, 'pages/faq.html', context)
 
 
+def feedback(request):
+    context = sidebar()
+
+    page = PageContent.objects.get(name='feedback')
+    context['page'] = page
+
+    return render(request, 'pages/feedback.html', context)
+
+
 def fletching(request):
     context = sidebar()
 
@@ -162,6 +171,15 @@ def nocking(request):
     context['page'] = page
 
     return render(request, 'pages/nocking.html', context)
+
+
+def sponsors(request):
+    context = sidebar()
+
+    page = PageContent.objects.get(name='sponsors')
+    context['page'] = page
+
+    return render(request, 'pages/sponsors.html', context)
 
 
 def string_making(request):

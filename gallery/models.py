@@ -83,6 +83,7 @@ class Album(models.Model):
     images = models.ManyToManyField(
         Image, related_name='images', blank=True)
     quantity = models.IntegerField()
+    hidden = models.BooleanField(default=False)
     date_published = models.DateTimeField(default=timezone.now, blank=True)
     date_updated = models.DateTimeField(default=timezone.now, blank=True)
 

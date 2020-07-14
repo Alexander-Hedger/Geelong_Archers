@@ -8,6 +8,7 @@ class Announcement(models.Model):
     announcement = models.TextField()
     short_announcement = models.CharField(max_length=250)
     is_published = models.BooleanField(default=True)
+    members_only = models.BooleanField(default=True)
     date_published = models.DateTimeField(default=timezone.now, blank=True)
 
     def __str__(self):
