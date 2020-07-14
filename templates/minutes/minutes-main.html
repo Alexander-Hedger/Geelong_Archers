@@ -12,6 +12,7 @@
 <div id="minutes_main" class="col-12 col-md-8 col-lg-9 pl-4 pr-4">
     <h3 id="main_title" class="text-center display-4 my-4">Documents</h3>
     
+    {% if user.is_authenticated %}
     <div class="row">
         <div class="col-12 mb-5">
             <div class="card">
@@ -87,7 +88,7 @@
             </div>
         </div>
     </div>
-
+    {% endif %}
     <div id="documents">    
         <div class="accordion" id="accordionExample">
     

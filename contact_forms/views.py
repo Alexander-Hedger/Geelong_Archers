@@ -7,12 +7,12 @@ from .models import ContactIntro
 
 
 def contact_admin(request):
-    context = sidebar()
+    context = sidebar(request)
     return render(request, 'contact_forms/contact-admin.html', context)
 
 
 def contact_awards(request):
-    context = sidebar()
+    context = sidebar(request)
     return render(request, 'contact_forms/contact-awards.html', context)
 
 
@@ -49,7 +49,7 @@ def contact_events(request, contact_type, event_id):
                 request, 'You have successfully signed up to the event!')
             return redirect('events-main')
 
-    context = sidebar()
+    context = sidebar(request)
     context['contact_type'] = contact_type
     context['contact_event'] = contact_event
     return render(request, 'contact_forms/contact-events.html', context)

@@ -15,7 +15,7 @@ def events_admin(request):
     events_intro = EventIntro.objects.order_by(
         'date_start')
 
-    context = sidebar()
+    context = sidebar(request)
 
     context2 = validate()
 
@@ -38,7 +38,7 @@ def events_main(request):
     events_intro = EventIntro.objects.order_by(
         'date_start').filter(is_published=True)[:6]
 
-    context = sidebar()
+    context = sidebar(request)
 
     context['events_motd'] = events_motd
     context['events_comp'] = events_comp
@@ -56,7 +56,7 @@ def events_listing(request, event_type, event_id):
     if event_type == 'intro':
         contact_event = get_object_or_404(EventIntro, pk=event_id)
 
-    context = sidebar()
+    context = sidebar(request)
     context['listing_event'] = contact_event
     context['event_type'] = event_type
     return render(request, 'events/events-listing.html', context)
@@ -113,6 +113,6 @@ def events_create(request, event_type):
             messages.success(request, 'Your event has been published!')
             return redirect('events-admin')
 
-    context = sidebar()
+    context = sidebar(request)
     context['event_type'] = event_type
     return render(request, 'events/events-create.html', context)

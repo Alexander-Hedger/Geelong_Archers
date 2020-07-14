@@ -10,7 +10,7 @@ def minutes_admin(request):
 
     agm_minutes = AgmMinutes.objects.order_by('-date_published')
 
-    context = sidebar()
+    context = sidebar(request)
 
     context['committee_minutes'] = committee_minutes
     context['agm_minutes'] = agm_minutes
@@ -57,7 +57,7 @@ def minutes_main(request):
 
     agm_minutes = AgmMinutes.objects.order_by('-date_published')
 
-    context = sidebar()
+    context = sidebar(request)
 
     context['committee_minutes'] = committee_minutes
     context['agm_minutes'] = agm_minutes

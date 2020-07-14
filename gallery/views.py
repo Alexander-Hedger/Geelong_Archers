@@ -6,7 +6,7 @@ from PIL import UnidentifiedImageError, Image as PILImage
 
 
 def gallery_admin(request):
-    context = sidebar()
+    context = sidebar(request)
 
     albums = Album.objects.order_by('title')
 
@@ -16,7 +16,7 @@ def gallery_admin(request):
 
 
 def gallery_create(request):
-    context = sidebar()
+    context = sidebar(request)
 
     if request.method == 'POST':
         title = request.POST['album_title']
@@ -54,7 +54,7 @@ def gallery_create(request):
 
 
 def gallery_main(request):
-    context = sidebar()
+    context = sidebar(request)
 
     albums = Album.objects.order_by('title').filter(hidden=False)
 
@@ -64,7 +64,7 @@ def gallery_main(request):
 
 
 def gallery_edit(request, album_id):
-    context = sidebar()
+    context = sidebar(request)
     album = Album.objects.get(id=album_id)
 
     if request.method == 'POST':
@@ -161,7 +161,7 @@ def gallery_delete(request, album_id):
 
 
 def gallery_album(request, album_id):
-    context = sidebar()
+    context = sidebar(request)
     album = Album.objects.get(id=album_id)
 
     context['album'] = album

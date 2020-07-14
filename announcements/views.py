@@ -12,7 +12,7 @@ def announcements_main(request):
     admin_announcements = Announcement.objects.order_by(
         '-date_published')
 
-    context = sidebar()
+    context = sidebar(request)
 
     context['admin_announcements'] = admin_announcements
 
@@ -45,7 +45,7 @@ def announcements_create(request):
         return redirect('announcements-admin')
 
     else:
-        context = sidebar()
+        context = sidebar(request)
         return render(request, 'announcements/announcements-create.html', context)
 
 
@@ -53,7 +53,7 @@ def announcements_admin(request):
     admin_announcements = Announcement.objects.order_by(
         '-date_published')
 
-    context = sidebar()
+    context = sidebar(request)
 
     context['admin_announcements'] = admin_announcements
     return render(request, 'announcements/announcements-admin.html', context)
@@ -85,7 +85,7 @@ def announcements_edit(request, announcement_id):
         messages.success(request, 'Your announcement has been edited!')
         return redirect('announcements-admin')
 
-    context = sidebar()
+    context = sidebar(request)
     context['announcement'] = announcement
     return render(request, 'announcements/announcements-edit.html', context)
 

@@ -22,7 +22,7 @@ regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
 
 
 def admin_dashboard(request):
-    context = sidebar()
+    context = sidebar(request)
 
     events_comp = EventComp.objects.order_by(
         'date_start')
@@ -52,12 +52,12 @@ def admin_dashboard(request):
 
 
 def bulk_upload_main(request):
-    context = sidebar()
+    context = sidebar(request)
     return render(request, 'custom_admin/bulk_upload_main.html', context)
 
 
 def page_editor(request, page):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name=page)
 
@@ -97,7 +97,7 @@ def tinymce_image_handler(request):
 
 
 def bulk_upload_map(request):
-    context = sidebar()
+    context = sidebar(request)
 
     if request.method == 'POST':
         csv_upload = request.FILES['csv_upload']

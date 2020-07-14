@@ -13,22 +13,23 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def store_admin(request):
-    context = sidebar()
+    context = sidebar(request)
     return render(request, 'store/store-admin.html', context)
 
 
 def store_create(request):
-    context = sidebar()
+    context = sidebar(request)
     return render(request, 'store/store-create.html', context)
 
 
 @login_required
 def store_checkout(request):
-    context = sidebar()
+    context = sidebar(request)
 
     if request.method == 'POST':
         order = Order.objects.get(user=request.user, ordered=False)
         # `source` is obtained with Stripe.js; see https://stripe.com/docs/payments/accept-a-payment-charges#web-create-token
+        form = PaymentForm
         token = request.POST.get('stripeToken')
         amount = int(order.get_total() * 100)  # amount is in cents
 
@@ -99,14 +100,14 @@ def store_checkout(request):
 
 
 def store_item(request, slug):
-    context = sidebar()
+    context = sidebar(request)
     item = get_object_or_404(Item, slug=slug)
     context['item'] = item
     return render(request, 'store/store-item.html', context)
 
 
 def store_main(request):
-    context = sidebar()
+    context = sidebar(request)
 
     context['items'] = Item.objects.all()
 
@@ -115,7 +116,7 @@ def store_main(request):
 
 @login_required
 def store_order_summary(request):
-    context = sidebar()
+    context = sidebar(request)
 
     try:
         context['order'] = Order.objects.get(user=request.user, ordered=False)

@@ -5,9 +5,11 @@ from functions.functions import sidebar
 from pages.models import PageContent
 from accounts.models import Committee, LifeMember
 
+from django.contrib.auth.models import User
+
 
 def about_archery(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='about_archery')
 
@@ -17,7 +19,7 @@ def about_archery(request):
 
 
 def archers_diary(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='archers_diary')
     context['page'] = page
@@ -26,7 +28,7 @@ def archers_diary(request):
 
 
 def arrow_cutter(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='arrow_cutter')
     context['page'] = page
@@ -35,7 +37,7 @@ def arrow_cutter(request):
 
 
 def bowpress(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='bowpress')
     context['page'] = page
@@ -44,7 +46,7 @@ def bowpress(request):
 
 
 def by_laws(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='by_laws')
     context['page'] = page
@@ -53,7 +55,7 @@ def by_laws(request):
 
 
 def committee(request):
-    context = sidebar()
+    context = sidebar(request)
 
     committee = Committee.objects.order_by(
         'order')
@@ -66,7 +68,7 @@ def committee(request):
 
 
 def contact(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='contact')
     context['page'] = page
@@ -75,7 +77,7 @@ def contact(request):
 
 
 def equipment(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='equipment')
     context['page'] = page
@@ -84,7 +86,7 @@ def equipment(request):
 
 
 def facilities(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='facilities')
     context['page'] = page
@@ -93,7 +95,7 @@ def facilities(request):
 
 
 def faq(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='faq')
     context['page'] = page
@@ -102,7 +104,7 @@ def faq(request):
 
 
 def feedback(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='feedback')
     context['page'] = page
@@ -111,7 +113,7 @@ def feedback(request):
 
 
 def fletching(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='fletching')
     context['page'] = page
@@ -120,7 +122,7 @@ def fletching(request):
 
 
 def history(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='history')
     context['page'] = page
@@ -129,7 +131,7 @@ def history(request):
 
 
 def home(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='home')
     context['page'] = page
@@ -138,7 +140,7 @@ def home(request):
 
 
 def intro_course_info(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='intro_course_info')
     context['page'] = page
@@ -147,7 +149,7 @@ def intro_course_info(request):
 
 
 def life_member(request):
-    context = sidebar()
+    context = sidebar(request)
 
     members = LifeMember.objects.order_by(
         'year_made')
@@ -160,7 +162,7 @@ def life_member(request):
 
 
 def maintenance(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='maintenance')
     context['page'] = page
@@ -169,7 +171,7 @@ def maintenance(request):
 
 
 def nocking(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='nocking')
     context['page'] = page
@@ -178,7 +180,7 @@ def nocking(request):
 
 
 def sponsors(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='sponsors')
     context['page'] = page
@@ -187,7 +189,7 @@ def sponsors(request):
 
 
 def string_making(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='string_making')
     context['page'] = page
@@ -196,7 +198,7 @@ def string_making(request):
 
 
 def wiki_compound(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='wiki_compound')
     context['page'] = page
@@ -205,7 +207,7 @@ def wiki_compound(request):
 
 
 def wiki_longbow(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='wiki_longbow')
     context['page'] = page
@@ -214,7 +216,7 @@ def wiki_longbow(request):
 
 
 def wiki_main(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='wiki_main')
     context['page'] = page
@@ -223,7 +225,7 @@ def wiki_main(request):
 
 
 def wiki_recurve(request):
-    context = sidebar()
+    context = sidebar(request)
 
     page = PageContent.objects.get(name='wiki_recurve')
     context['page'] = page

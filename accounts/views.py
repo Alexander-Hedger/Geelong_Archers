@@ -10,7 +10,7 @@ import os
 
 @xframe_options_exempt
 def dashboard(request):
-    context = sidebar()
+    context = sidebar(request)
     # Scrape Archers Diary
     if request.method == 'POST':
         scrape(request)
@@ -116,7 +116,7 @@ def login(request):
             messages.error(request, 'Invalid credentials')
             return redirect('login')
     else:
-        context = sidebar()
+        context = sidebar(request)
         return render(request, 'accounts/login.html', context)
 
 
