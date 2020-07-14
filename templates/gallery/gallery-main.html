@@ -12,11 +12,11 @@
             <div class="card-header d-flex align-items-center">
                 <h4 class="ml-4 mb-0"><i class="fas fa-images mr-2"></i>Albums</h4>
             </div>
-            <div class="card-body">
+            <div class="card-body pb-1">
                 <div class="row">
                     {% if albums %}
                         {% for album in albums %}
-                            <div class="col-6 col-lg-4 px-2">
+                            <div class="col-6 col-lg-4 px-2 mb-3">
                                 <a href="{% url 'gallery-album' album.id %}">
                                     <div id="album-card" class="card">
                                         <div id="album-image" style="background-image: url(../media/{{album.feature_image.thumbnail}})" class="card-body p-1">
