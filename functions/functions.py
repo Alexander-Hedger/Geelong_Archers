@@ -74,7 +74,7 @@ def scrape(request):
 
     # Production
     CHROME_PATH = "/usr/bin/google-chrome-stable"
-    CHROMEDRIVER_PATH = 'static/webdrivers/linuxchromedriver'
+    CHROMEDRIVER_PATH = 'static/webdrivers/chromedriver'
 
     WINDOW_SIZE = "1920,1080"
 

@@ -14,6 +14,7 @@ db.sqlite3-journal
 venv
 /static
 /geelong_archers/static/dev
+/geelong_archers/static/webdrivers
 
 ### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files
