@@ -6,6 +6,8 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 from awards.models import MemberEvents, MemberAwards, MemberAvailableAwards, Awards, MemberClassificationAnnual, MemberClassification
 from .models import Account
 import os
+from datetime import date, timedelta
+import math
 
 
 @xframe_options_exempt
@@ -14,6 +16,38 @@ def dashboard(request):
     # Scrape Archers Diary
     if request.method == 'POST':
         scrape(request)
+
+    # Your Rating
+    disciplines = ['Outdoor', 'Field', 'Indoor', 'Clout']
+    division = request.user.division
+    discipline = 'Outdoor'
+
+    try:
+        if request.GET['request_type'] == 'rating':
+            discipline = request.GET['discipline']
+    except:
+        pass
+
+    past_year = date.today() - timedelta(days=365)
+
+    event_ratings = MemberEvents.objects.order_by(
+        'date').filter(member=request.user, date__gt=past_year, discipline=discipline, division=division).values_list('rating', flat=True)
+
+    if len(event_ratings) < 10:
+        event_ratings_reverse = MemberEvents.objects.order_by(
+            '-date').filter(member=request.user, discipline=discipline, division=division)[:9].values_list('rating', flat=True)
+
+        event_ratings = event_ratings_reverse[::-1]
+
+    if len(event_ratings) < 3:
+        rating = 'N/A'
+    else:
+        rating = (event_ratings[0]+event_ratings[1]+event_ratings[2])/3
+        for event_rating in event_ratings[2:]:
+            if event_rating > rating:
+                rating = rating + (event_rating-rating)/2
+
+        rating = math.floor(rating)
 
     # Your Classifications
     disciplines = ['Outdoor', 'Field', 'Indoor', 'Clout']
@@ -95,7 +129,9 @@ def dashboard(request):
 
     context['values'] = request.GET
     context['divisions'] = divisions
+    context['disciplines'] = disciplines
     context['archer_classes'] = archer_classes
+    context['rating'] = rating
 
     return render(request, 'accounts/dashboard.html', context)
 
@@ -141,7 +177,7 @@ def account_update(request):
 
     try:
         if request.FILES['user_photo']:
-            if user.photo != 'photos/users/display_photo.jpg':
+            if user.photo != 'photos/users/user_placeholder.jpg':
                 if os.path.isfile(user.photo.path):
                     os.remove(user.photo.path)
 

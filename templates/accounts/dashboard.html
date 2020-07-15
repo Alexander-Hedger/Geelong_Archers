@@ -48,10 +48,31 @@
             <div class="card text-center">
                 <div class="card-header"></div>
                 <div class="card-body p-2">
-                    <h2 class="display-3">84.5</h2>
+                    <h2 class="display-3">{{rating}}</h2>
                 </div>
                 <div class="card-footer bg-dark py-1 text-primary">
                     <h3>Your Rating</h3>
+                    <form action="{% url 'dashboard' %}" class="text-center">
+                        <div class="">
+                            <input type="hidden" name="request_type" value="rating">
+
+                            <select class="form-control mb-2" name="discipline" id="discipline">
+                                {% for discipline in disciplines %}
+                                        <option value='{{discipline}}'
+                                        {% if values.discipline %}
+                                            {% if discipline == values.discipline %}
+                                                selected
+                                            {% endif %}
+                                        {% elif discipline == request.user.discipline %}
+                                            selected
+                                        {% endif %}
+                                        >{{discipline}}</option>
+                                {% endfor %}
+                            </select> 
+
+                            <input type="submit" value="Update" class="btn btn-primary btn-sm mb-1">
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class=" text-center mt-4">        
