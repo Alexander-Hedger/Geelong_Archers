@@ -315,7 +315,7 @@ def scrape(request):
         # clean score_count
         score_count = score_count.replace(' (view)', '')
 
-        key = f'{discipline} {archer_class} {division} - {classification}'
+        key = f'{request.user.id} - {discipline} {archer_class} {division} - {classification}'
 
         classification_history[key] = {
             'discipline': discipline,
@@ -351,7 +351,8 @@ def scrape(request):
             try:
 
                 # Get record ID from Award Model
-                record_id = MemberClassification.objects.get(name=key)
+                record_id = MemberClassification.objects.get(
+                    member_id=request.user, name=key)
                 record_id.score_count = score_count
                 record_id.save()
 
@@ -365,7 +366,7 @@ def scrape(request):
 
                 # Get record ID from Award Model
                 record_id = MemberClassificationAnnual.objects.get(
-                    name=annual_key)
+                    member_id=request.user, name=annual_key)
                 record_id.score_count = score_count
                 record_id.save()
 
