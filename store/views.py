@@ -12,11 +12,13 @@ import stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
+@login_required
 def store_admin(request):
     context = sidebar(request)
     return render(request, 'store/store-admin.html', context)
 
 
+@login_required
 def store_create(request):
     context = sidebar(request)
     return render(request, 'store/store-create.html', context)
@@ -99,6 +101,7 @@ def store_checkout(request):
     return render(request, 'store/store-checkout.html', context)
 
 
+@login_required
 def store_item(request, slug):
     context = sidebar(request)
     item = get_object_or_404(Item, slug=slug)
@@ -106,6 +109,7 @@ def store_item(request, slug):
     return render(request, 'store/store-item.html', context)
 
 
+@login_required
 def store_main(request):
     context = sidebar(request)
 

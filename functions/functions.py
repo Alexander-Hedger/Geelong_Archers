@@ -69,12 +69,12 @@ def scrape(request):
     name = str(request.user)
 
     # # Development
-    CHROME_PATH = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
-    CHROMEDRIVER_PATH = 'static/webdrivers/chromedriver'
+    # CHROME_PATH = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
+    # CHROMEDRIVER_PATH = 'static/webdrivers/chromedriver'
 
     # Production
-    # CHROME_PATH = "/usr/bin/google-chrome-stable"
-    # CHROMEDRIVER_PATH = 'static/webdrivers/chromedriver'
+    CHROME_PATH = "/usr/bin/google-chrome-stable"
+    CHROMEDRIVER_PATH = 'static/webdrivers/chromedriver'
 
     WINDOW_SIZE = "1920,1080"
 
@@ -84,11 +84,11 @@ def scrape(request):
     chrome_options.binary_location = CHROME_PATH
 
     # Use to run chrome with head display [for debugging]
-    driver = webdriver.Chrome(executable_path=(
-        'static/webdrivers/chromedriver'))
+    # driver = webdriver.Chrome(executable_path=(
+    #     'static/webdrivers/chromedriver'))
 
-    # driver = webdriver.Chrome(
-    #     executable_path=(CHROMEDRIVER_PATH), chrome_options=chrome_options)
+    driver = webdriver.Chrome(
+        executable_path=(CHROMEDRIVER_PATH), chrome_options=chrome_options)
 
     url = 'https://www.archersdiary.com/MyEvents.aspx'
 
