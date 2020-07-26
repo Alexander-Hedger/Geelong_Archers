@@ -35,7 +35,7 @@ def dashboard(request):
 
     if len(event_ratings) < 10:
         event_ratings_reverse = MemberEvents.objects.order_by(
-            '-date').filter(member=request.user, discipline=discipline, division=division)[:9].values_list('rating', flat=True)
+            '-date').filter(member=request.user, discipline=discipline, division=division)[:10].values_list('rating', flat=True)
 
         event_ratings = event_ratings_reverse[::-1]
 
@@ -46,8 +46,7 @@ def dashboard(request):
         for event_rating in event_ratings[2:]:
             if event_rating > rating:
                 rating = rating + (event_rating-rating)/2
-
-        rating = math.floor(rating)
+                rating = math.floor(rating)
 
     # Your Classifications
     disciplines = ['Outdoor', 'Field', 'Indoor', 'Clout']
