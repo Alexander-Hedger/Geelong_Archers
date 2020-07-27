@@ -6,9 +6,9 @@ from .models import CommitteeMinutes, AgmMinutes
 
 def minutes_admin(request):
 
-    committee_minutes = CommitteeMinutes.objects.order_by('-date_published')
+    committee_minutes = CommitteeMinutes.objects.order_by('-date')
 
-    agm_minutes = AgmMinutes.objects.order_by('-date_published')
+    agm_minutes = AgmMinutes.objects.order_by('-date')
 
     context = sidebar(request)
 
@@ -53,9 +53,9 @@ def minutes_delete(request, minutes_type, pk):
 
 def minutes_main(request):
     committee_minutes = CommitteeMinutes.objects.order_by(
-        '-date_published')
+        '-date')
 
-    agm_minutes = AgmMinutes.objects.order_by('-date_published')
+    agm_minutes = AgmMinutes.objects.order_by('-date')
 
     context = sidebar(request)
 

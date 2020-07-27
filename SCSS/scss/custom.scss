@@ -126,6 +126,11 @@ body {
 		background-position: center;
 		background-size: cover;
 	}
+
+	.carousel-caption {
+		background-color: hsla(0, 0%, 0%, 0.85);
+		color: $primary;
+	}
 }
 
 #main {
@@ -617,6 +622,18 @@ body {
 }
 // large
 @media (max-width: 992px) {
+	.modal {
+		top: 5vh;
+		height: 90vh;
+
+		.card {
+			height: 85vh;
+		}
+
+		.card-body {
+			height: 100%;
+		}
+	}
 }
 // extra-large
 @media (max-width: 1200px) {

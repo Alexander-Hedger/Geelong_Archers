@@ -7857,6 +7857,9 @@ body {
     max-height: 450px;
     background-position: center;
     background-size: cover; }
+  #mainCarousel .carousel-caption {
+    background-color: rgba(0, 0, 0, 0.85);
+    color: #00d9ff; }
 
 #main {
   background: white;
@@ -8166,5 +8169,13 @@ body {
   #documents button {
     font-size: 1rem;
     margin-left: 0rem !important; } }
+@media (max-width: 992px) {
+  .modal {
+    top: 5vh;
+    height: 90vh; }
+    .modal .card {
+      height: 85vh; }
+    .modal .card-body {
+      height: 100%; } }
 
 /*# sourceMappingURL=style.css.map */
