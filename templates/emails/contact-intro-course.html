@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lato|Sen|Ubuntu&display=swap" rel="stylesheet">
+
+    <style>
+
+        body {
+            font-family: "Lato", sans-serif;
+            color: #666666;
+            min-height: 100vh;
+            height: 100%;
+            margin: 0;
+            
+            
+        }
+    
+        #container {
+            max-width: 800px;
+            margin: auto;
+            box-shadow: 0px 0px 25px 3px #444444;
+            display:block;
+            min-height: 50vh;
+            overflow-y: hidden;
+            background-color: white;
+    
+        }
+        
+        #topbar {
+            height: 100px;
+            background: url(http://13.211.248.215/static/img/top_banner.jpg);
+            background-position: 50% 67%; /* Center the image */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            background-size: cover;
+            background-color: #00d9ff;
+            
+        }
+        
+        #navbar{
+            background-color: #282828;
+            border-top: 2px solid #00d9ff;
+            border-bottom: 2px solid #00d9ff;
+            box-shadow: 0 4px 10px #444444;
+            color: #00d9ff;
+            padding: 0.2rem;
+        }
+        
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: #00d9ff;
+            margin-left: 2rem;
+        }
+        
+        #footer {
+            background:#282828;
+            font-size: 0.8rem;
+            box-shadow: 0 -4px 6px 0.1px #444444;
+            color:#00d9ff;
+            padding: 0.1rem;
+            text-align: center;
+            
+        }
+    
+        .main {
+            margin: 1rem 2rem 2rem 2rem;
+        }
+    
+        #main-container {
+            background-color:rgba(234, 234, 238, 0.582);;
+        }
+    
+        .title {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+    
+    
+    @media (max-width: 768px) {
+        .navbar-brand {
+        display: block;
+        margin: auto;
+        text-align: center;
+        }
+    
+        .main {
+            margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+        }
+    }
+    </style>
+    
+</head>
+
+
+
+<body>
+    <div id="topbar">
+    </div>
+    <div id="navbar">
+        <a class="navbar-brand" href="http://13.211.248.215/">GEELONG ARCHERS</a>
+    </div>
+    <div class="" id="main-container">
+        <div class="" id="container">
+            <div class="main">
+                <div class="title-container">
+                    <div class="title">Congratulations on Your First Step!</div>
+                </div>
+                <div class="text-body">
+                    <p>Dear {{ contact.first_name }} {{ contact.last_name }},</p>
+                    <p>Thank-you for signing up to {{ event }}, please see the essential details below:</p>
+                    <table >
+                        <tbody>
+                            <tr>
+                                <td><b>Start Date:</b></td>
+                                <td>{{ event.date_start|date:"D, d M, Y"}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Start Time:</b></td>
+                                <td>{{ event.date_start|date:"g:iA"}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>End Time:</b></td>
+                                <td>{{ event.date_end|date:"g:iA"}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Duration:</b></td>
+                                <td>3 consecutive weeks</td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: top;"><b>Location:</b></td>
+                                <td>Deakin University Waurn Ponds Campus.<br/>
+                                    Enter via Deakin University Jarvis Road<br/>
+                                    Waurn Ponds<br/>
+                                    Victoria 3216<br/>
+                                    The entrance can be seen on google maps <a href="https://goo.gl/maps/AZtMCTqcQDcotRaP9">here</a>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>For your first week please arrive 15 minutes early so that we can get you set up with your equipment.</p>
+                    <p>It is also crucial that you wear correct attire on the day. It is very important that you wear closed toe shoes and avoid having anything dangling that could catch near your face. This includes things such as hoodie strings, excessive jewelery, and the tying back of long hair.</p>
+                    <p>If you have any questions or concerns please feel free to contact our come and try coordinator on <a href="mailto:comeandtry@geelongarchers.com.au">comeandtry@geelongarchers.com.au</a></p>
+                    <p>Looking forward to seeing you on the day!</p>
+                    <p><span style="color: #1f4e79;"><img style="display: block; margin-left: auto; margin-right: auto;" src="http://13.211.248.215/media/photos/albums/directions-1024x410.jpg" alt="" width="100%" height="auto" /></span></p></div></td>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- footer -->
+    <div id="footer">
+        <p>Geelong Archers - Celebrating 60 years of Archery</p> 
+    </div>
+</body>
+
+
+</html>

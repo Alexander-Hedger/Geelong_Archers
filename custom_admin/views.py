@@ -18,7 +18,7 @@ from PIL import UnidentifiedImageError, Image as PILImage
 from django.core.files.storage import default_storage
 from django.http import JsonResponse
 
-regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+regex = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
 
 
 def admin_dashboard(request):
@@ -209,6 +209,7 @@ def bulk_upload_tool(request, data_type):
                             member_expiry, '%d/%m/%Y').strftime('%Y-%m-%d')
                     except:
                         failed += 1
+                        print('BIRTHDATE/MEMBER FAIL')
                         continue
 
                     upload, created = Account.objects.get_or_create(

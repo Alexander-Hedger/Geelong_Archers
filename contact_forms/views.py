@@ -3,6 +3,10 @@ from functions.functions import sidebar
 from django.contrib import messages
 from events.models import EventIntro, EventComp, EventMotD
 from .models import ContactIntro
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
+from django.conf import settings
+
 # Create your views here.
 
 
@@ -44,6 +48,26 @@ def contact_events(request, contact_type, event_id):
                 contact_event.current_lh = int(contact_event.current_lh) + 1
 
             contact_event.save()
+
+            #### Send user confirmation email ####
+            plaintext = get_template(
+                settings.BASE_DIR + '/templates/emails/contact-intro-course.txt')
+            htmly = get_template(settings.BASE_DIR +
+                                 '/templates/emails/contact-intro-course.html')
+
+            context = {'contact': contact, 'event': contact_event}
+            subject = "Geelong Archers: Introduction Course Sign Up Confirmation"
+            from_email = 'alex4x4direct@gmail.com'
+            to_email = contact_email
+            text_content = plaintext.render(context)
+            html_content = htmly.render(context)
+
+            msg = EmailMultiAlternatives(
+                subject, text_content, from_email, [to_email])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+
+            ##################################################
 
             messages.success(
                 request, 'You have successfully signed up to the event!')
