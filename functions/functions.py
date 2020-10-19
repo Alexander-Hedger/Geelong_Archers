@@ -69,7 +69,7 @@ def bulk_scrape(request):
     for member in Account.objects.all():
         if member.email != 'webmaster@geelongarchers.com.au':
             print(member)
-            scrape(request, member)
+            scrape('bulk_scrape', member)
 
 
 def scrape(request, requested_member):
@@ -77,12 +77,12 @@ def scrape(request, requested_member):
     name = str(requested_member)
 
     # # Development
-    # CHROME_PATH = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
-    # CHROMEDRIVER_PATH = 'static/webdrivers/chromedriver'
+    CHROME_PATH = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
+    CHROMEDRIVER_PATH = 'static/webdrivers/chromedriver'
 
     # Production
-    CHROME_PATH = "/usr/bin/google-chrome-stable"
-    CHROMEDRIVER_PATH = 'static/webdrivers/chromedriver'
+    # CHROME_PATH = "/usr/bin/google-chrome-stable"
+    # CHROMEDRIVER_PATH = 'static/webdrivers/chromedriver'
 
     WINDOW_SIZE = "1920,1080"
 
@@ -296,13 +296,14 @@ def scrape(request, requested_member):
                                      flight=event[1]['flight'], archer_class=event[1]['archer_class'], division=event[1]['division'], archery_round=event[1]['archery_round'], score=event[1]['score'], rating=event[1]['rating'], awards=event[1]['awards'], total_awards=event[1]['total_awards'])
             new_event.save()
 
-    if count > 0 and award_count > 0:
-        messages.success(
-            request, f'{count} new events have been updated with {award_count} new awards available!')
-    elif count > 0:
-        messages.success(request, f'{count} new events have been updated!')
-    else:
-        messages.success(request, 'Your events are up to date!')
+    if request != 'bulk_scrape':
+        if count > 0 and award_count > 0:
+            messages.success(
+                request, f'{count} new events have been updated with {award_count} new awards available!')
+        elif count > 0:
+            messages.success(request, f'{count} new events have been updated!')
+        else:
+            messages.success(request, 'Your events are up to date!')
 
     # Get classification
     url = 'https://www.archersdiary.com/ClassificationLookup.aspx'
@@ -395,4 +396,4 @@ def scrape(request, requested_member):
                 new_record.save()
 
     driver.quit()
-    return redirect('dashboard')
+    return

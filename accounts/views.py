@@ -19,6 +19,7 @@ def dashboard(request):
     if request.method == 'POST':
         requested_member = request.user
         scrape(request, requested_member)
+        return redirect('dashboard')
 
     # Your Rating
     disciplines = ['Outdoor', 'Field', 'Indoor', 'Clout']
