@@ -4,7 +4,7 @@ import datetime
 import re
 
 from django.shortcuts import render, redirect
-from functions.functions import sidebar
+from functions.functions import sidebar, scrape, bulk_scrape
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 
@@ -54,6 +54,15 @@ def admin_dashboard(request):
 def bulk_upload_main(request):
     context = sidebar(request)
     return render(request, 'custom_admin/bulk_upload_main.html', context)
+
+
+def bulk_event_update(request):
+    context = sidebar(request)
+
+    if request.method == 'POST':
+        bulk_scrape(request)
+
+    return render(request, 'custom_admin/bulk_event_update.html', context)
 
 
 def page_editor(request, page):

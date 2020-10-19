@@ -1,6 +1,6 @@
 from announcements.models import Announcement
 from events.models import EventIntro, EventComp, EventMotD
-from accounts.models import Committee
+from accounts.models import Committee, Account
 from django.contrib import messages
 from django.contrib.auth.models import User
 
@@ -65,8 +65,16 @@ def validate():
     return context2
 
 
-def scrape(request):
-    name = str(request.user)
+def bulk_scrape(request):
+    for member in Account.objects.all():
+        if member.email != 'webmaster@geelongarchers.com.au':
+            print(member)
+            scrape(request, member)
+
+
+def scrape(request, requested_member):
+
+    name = str(requested_member)
 
     # # Development
     CHROME_PATH = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
@@ -100,8 +108,12 @@ def scrape(request):
     driver.find_element_by_xpath(name_input).send_keys(u'\ue007')
 
     driver.implicitly_wait(10)
-    driver.find_element_by_xpath(
-        '//*[@id="ctl00_mainContent_GridView1"]/thead/tr/th[1]')
+
+    try:
+        driver.find_element_by_xpath(
+            '//*[@id="ctl00_mainContent_GridView1"]/thead/tr/th[1]')
+    except:
+        return
 
     html = driver.page_source
 
@@ -124,7 +136,7 @@ def scrape(request):
             link = f'https://www.archersdiary.com/{url}'
 
             # Remove Existing Events
-            if MemberEvents.objects.filter(member=request.user, link=link).exists():
+            if MemberEvents.objects.filter(member=requested_member, link=link).exists():
                 continue
 
             count += 1
@@ -220,7 +232,7 @@ def scrape(request):
                                     award_key_list.append(award_key)
 
             # With awards field added, Add Event to MemberEvents Model
-            new_event = MemberEvents(member=request.user, link=event[1]['link'], event_name=event[1]['event_name'], club=event[1]['club'], discipline=event[1]['discipline'], date=event[1]['date'], day=event[1]['day'],
+            new_event = MemberEvents(member=requested_member, link=event[1]['link'], event_name=event[1]['event_name'], club=event[1]['club'], discipline=event[1]['discipline'], date=event[1]['date'], day=event[1]['day'],
                                      flight=event[1]['flight'], archer_class=event[1]['archer_class'], division=event[1]['division'], archery_round=event[1]['archery_round'], score=event[1]['score'], rating=event[1]['rating'], awards=event[1]['awards'], total_awards=event[1]['total_awards'])
             new_event.save()
 
@@ -234,15 +246,15 @@ def scrape(request):
                         # Get Award ID from Award Model
                         award_id = Awards.objects.get(name=award_key)
                         # check if member already has award, if not, add it.
-                        if not MemberAwards.objects.filter(member=request.user, award=award_id).exists():
+                        if not MemberAwards.objects.filter(member=requested_member, award=award_id).exists():
                             award_count += 1
                             # Add new award to MemberAwards
                             new_member_award = MemberAwards(
-                                member=request.user, award=award_id, date_recieved=event[1]['date'])
+                                member=requested_member, award=award_id, date_recieved=event[1]['date'])
                             new_member_award.save()
                             # Add new award to MemberAvailableAwards
                             new_member_available = MemberAvailableAwards(
-                                member=request.user, award=award_id)
+                                member=requested_member, award=award_id)
                             new_member_available.save()
                     except Awards.DoesNotExist:
                         pass
@@ -280,7 +292,7 @@ def scrape(request):
                                 award_key_list.append(award_key)
 
             # With awards field added, Add Event to MemberEvents Model
-            new_event = MemberEvents(member=request.user, link=event[1]['link'], event_name=event[1]['event_name'], club=event[1]['club'], discipline=event[1]['discipline'], date=event[1]['date'], day=event[1]['day'],
+            new_event = MemberEvents(member=requested_member, link=event[1]['link'], event_name=event[1]['event_name'], club=event[1]['club'], discipline=event[1]['discipline'], date=event[1]['date'], day=event[1]['day'],
                                      flight=event[1]['flight'], archer_class=event[1]['archer_class'], division=event[1]['division'], archery_round=event[1]['archery_round'], score=event[1]['score'], rating=event[1]['rating'], awards=event[1]['awards'], total_awards=event[1]['total_awards'])
             new_event.save()
 
@@ -322,7 +334,7 @@ def scrape(request):
         # clean score_count
         score_count = score_count.replace(' (view)', '')
 
-        key = f'{request.user.id} - {discipline} {archer_class} {division} - {classification}'
+        key = f'{requested_member.id} - {discipline} {archer_class} {division} - {classification}'
 
         classification_history[key] = {
             'discipline': discipline,
@@ -359,12 +371,12 @@ def scrape(request):
 
                 # Get record ID from Award Model
                 record_id = MemberClassification.objects.get(
-                    member_id=request.user, name=key)
+                    member_id=requested_member, name=key)
                 record_id.score_count = score_count
                 record_id.save()
 
             except MemberClassification.DoesNotExist:
-                new_record = MemberClassification(member=request.user, name=key, rank=rank, discipline=discipline, archer_class=archer_class,
+                new_record = MemberClassification(member=requested_member, name=key, rank=rank, discipline=discipline, archer_class=archer_class,
                                                   division=division, classification=classification, score_count=score_count, classification_id=classification_id)
                 new_record.save()
 
@@ -373,12 +385,12 @@ def scrape(request):
 
                 # Get record ID from Award Model
                 record_id = MemberClassificationAnnual.objects.get(
-                    member_id=request.user, name=annual_key)
+                    member_id=requested_member, name=annual_key)
                 record_id.score_count = score_count
                 record_id.save()
 
             except MemberClassificationAnnual.DoesNotExist:
-                new_record = MemberClassificationAnnual(member=request.user, name=annual_key, rank=rank, discipline=discipline, archer_class=archer_class,
+                new_record = MemberClassificationAnnual(member=requested_member, name=annual_key, rank=rank, discipline=discipline, archer_class=archer_class,
                                                         division=division, classification=classification, score_count=score_count, year=year, classification_id=classification_id)
                 new_record.save()
 

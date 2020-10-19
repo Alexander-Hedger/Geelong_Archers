@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="bulk_upload" class="col-12 col-md-8 col-lg-9 pl-4 pr-4">
+    <!-- Alerts -->
+    {% include 'partials/_alerts.html' %}
+    <h3 id="main_title" class="text-center display-4 my-4">Bulk Events Update</h3>
+    <div class="row">
+        <div class="col-12 col-sm-10 col-md-12 col-lg-10 m-auto">
+            <div class="card bg-white">
+                <div class="card-header bg-primary"></div>
+                <div class="card-body py-3 px-4">
+                    <h3 class="text-center mb-4">Bulk User Events Update</h3>
+                    <form action="{% url 'bulk_event_update' %}" class="text-center" method='POST'>
+                        {% csrf_token %}
+                            <div class="form-group mb-0">
+                                <a href="" data-dismiss="modal" class="btn btn-outline-danger btn-lg mr-3">Cancel</a>
+                                <input type="submit" value="Update Events" class="btn btn-primary btn-lg mr-3">
+                            </div>
+                    </form>
+                </div>
+                <div class="card-footer bg-dark rounded-bottom"></div>
+            </div>
+        </div>    
+    </div>
+</div>    
+
+{% endblock %}

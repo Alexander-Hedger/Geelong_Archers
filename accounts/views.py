@@ -17,7 +17,8 @@ def dashboard(request):
     context = sidebar(request)
     # Scrape Archers Diary
     if request.method == 'POST':
-        scrape(request)
+        requested_member = request.user
+        scrape(request, requested_member)
 
     # Your Rating
     disciplines = ['Outdoor', 'Field', 'Indoor', 'Clout']
