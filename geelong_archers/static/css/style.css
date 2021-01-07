@@ -8084,12 +8084,6 @@ body {
   text-decoration: none; }
 #events .card {
   color: #282828; }
-#events .card:hover {
-  box-shadow: 0px 4px 8px 1.5px #444444;
-  cursor: pointer;
-  transform: scale(1.05);
-  transition: 0.05s;
-  color: #00d9ff; }
 #events .card-header {
   background-color: #282828;
   border-bottom: 2px solid #00d9ff; }
@@ -8103,6 +8097,12 @@ body {
   border-radius: 0rem 0rem 0.5rem 0.5rem;
   border: none;
   font-size: 0.95rem; }
+#events .clickable .card:hover {
+  box-shadow: 0px 4px 8px 1.5px #444444;
+  cursor: pointer;
+  transform: scale(1.05);
+  transition: 0.05s;
+  color: #00d9ff; }
 
 #listing .card-img-top {
   width: 100%;

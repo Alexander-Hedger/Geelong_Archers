@@ -490,13 +490,6 @@ body {
 	.card {
 		color: $dark;
 	}
-	.card:hover {
-		box-shadow: 0px 4px 8px 1.5px $shadow;
-		cursor: pointer;
-		transform: scale(1.05);
-		transition: 0.05s;
-		color: $primary;
-	}
 
 	.card-header {
 		background-color: $dark;
@@ -517,6 +510,16 @@ body {
 		border-radius: 0rem 0rem 0.5rem 0.5rem;
 		border: none;
 		font-size: 0.95rem;
+	}
+
+	.clickable {
+		.card:hover {
+			box-shadow: 0px 4px 8px 1.5px $shadow;
+			cursor: pointer;
+			transform: scale(1.05);
+			transition: 0.05s;
+			color: $primary;
+		}
 	}
 }
 

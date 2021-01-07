@@ -15,6 +15,36 @@
                 </div>
             </div>
         </div>
+
+    
+    <!-- Beginners Courses -->
+    <div class="row d-flex align-items-stretch pb-4">
+        <div class="col-12">
+            <h3 class="text-dark mb-3">
+                <i class="far fa-calendar mr-2"></i>Beginner's Courses
+            </h3>
+        </div>
+        {% if events_intro %}
+            {% for event in events_intro %}
+            <div class="col-6 col-lg-3 clickable">
+                <a href="{% url 'events-listing' 'intro' event.id %}" class="m-0">
+                    <div class="card mb-4">
+                        <div class="card-header"></div>
+                        <img alt="" class="card-img-top" src="{% static 'img/img12.jpg' %}">
+                        <div class="card-body p-1 m-0">
+                            <h6 class="card-title p-0 m-0">{{ event.short_title }}</h6>
+                            <p class="card-text p-0 m-0">{{ event.date_start }}-{{ event.date_end }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div>
+            <p class="ml-5">No Events Available</p>
+            </div>
+        {% endif %} 
+        </div>
         
     <!-- Match of the Day -->
     <div class="row d-flex align-items-stretch pb-4">
@@ -26,17 +56,15 @@
     {% if events_motd %}
         {% for event in events_motd %}
             <div class="col-6 col-lg-3 mb-4">
-                <a href="{% url 'events-listing' 'motd' event.id %}" class="m-0">
-                    <div class="card h-100">
-                        <div class="card-header"></div>
-                        <img alt="" class="card-img-top" src="{% static 'img/img2.jpg' %}">
-                        <div class="card-body pt-1 px-2 pb-2 m-0">
-                            <h6 class="card-title p-0 m-0">{{ event.short_title }}</h6>
-                            <p class="card-text p-0 m-0">{{ event.date_start }}-{{ event.date_end }}</p>
-                            <p class="card-text p-0 m-0">{{ event.short_description }}</p>
-                        </div>
+                <div class="card h-100 m-0">
+                    <div class="card-header"></div>
+                    <img alt="" class="card-img-top" src="{% static 'img/img2.jpg' %}">
+                    <div class="card-body pt-1 px-2 pb-2 m-0">
+                        <h6 class="card-title p-0 m-0">{{ event.short_title }}</h6>
+                        <p class="card-text p-0 m-0">{{ event.date_start }}-{{ event.date_end }}</p>
+                        <p class="card-text p-0 m-0">{{ event.short_description }}</p>
                     </div>
-                </a>
+                </div>
             </div>
         {% endfor %}
     {% else %}
@@ -56,7 +84,7 @@
         </div>
         {% if events_comp %}
             {% for event in events_comp %}
-            <div class="col-6 col-lg-3">
+            <div class="col-6 col-lg-3 clickable">
                 <a href="{% url 'events-listing' 'comp' event.id %}" class="m-0">
                     <div class="card mb-4">
                         <div class="card-header"></div>
@@ -76,34 +104,6 @@
         {% endif %} 
         </div>
 
-    <!-- Beginners Courses -->
-    <div class="row d-flex align-items-stretch pb-4">
-    <div class="col-12">
-        <h3 class="text-dark mb-3">
-            <i class="far fa-calendar mr-2"></i>Beginner's Courses
-        </h3>
-    </div>
-    {% if events_intro %}
-        {% for event in events_intro %}
-        <div class="col-6 col-lg-3">
-            <a href="{% url 'events-listing' 'intro' event.id %}" class="m-0">
-                <div class="card mb-4">
-                    <div class="card-header"></div>
-                    <img alt="" class="card-img-top" src="{% static 'img/img12.jpg' %}">
-                    <div class="card-body p-1 m-0">
-                        <h6 class="card-title p-0 m-0">{{ event.short_title }}</h6>
-                        <p class="card-text p-0 m-0">{{ event.date_start }}-{{ event.date_end }}</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-        {% endfor %}
-    {% else %}
-        <div>
-        <p class="ml-5">No Events Available</p>
-        </div>
-    {% endif %} 
-    </div>
                  
 </div>
   
