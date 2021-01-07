@@ -57,7 +57,7 @@ def contact_events(request, contact_type, event_id):
 
             context = {'contact': contact, 'event': contact_event}
             subject = "Geelong Archers: Introduction Course Sign Up Confirmation"
-            from_email = 'alex4x4direct@gmail.com'
+            from_email = 'donotreply@geelongarchers.com.au'
             to_email = contact_email
             text_content = plaintext.render(context)
             html_content = htmly.render(context)

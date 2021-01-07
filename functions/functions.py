@@ -77,12 +77,12 @@ def scrape(request, requested_member):
     name = str(requested_member)
 
     # # Development
-    # CHROME_PATH = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
-    # CHROMEDRIVER_PATH = 'static/webdrivers/chromedriver'
+    CHROME_PATH = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
+    CHROMEDRIVER_PATH = 'static/webdrivers/chromedriver'
 
     # Production
-    CHROME_PATH = "/usr/bin/google-chrome-stable"
-    CHROMEDRIVER_PATH = 'static/webdrivers/chromedriver'
+    # CHROME_PATH = "/usr/bin/google-chrome-stable"
+    # CHROMEDRIVER_PATH = 'static/webdrivers/chromedriver'
 
     WINDOW_SIZE = "1920,1080"
 

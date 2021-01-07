@@ -160,6 +160,33 @@ def bulk_upload_tool(request, data_type):
         with open(uploaded_file_url) as csv_file:
             reader = csv.DictReader(csv_file)
 
+            if data_type == 'motd':
+                for row in reader:
+                    total += 1
+
+                    title = row[request.POST['title']]
+                    description = row[request.POST['description']]
+                    start_date = row[request.POST['start_date']]
+                    end_date = row[request.POST['end_date']]
+
+                    upload, created = EventMotD.objects.get_or_create(
+                        short_title=title,
+                        short_description=description,
+                        date_start=start_date,
+                        date_end=end_date,
+                    )
+
+                    if created:
+                        uploaded += 1
+                    else:
+                        upload.short_title = title
+                        upload.short_description = description
+                        upload.date_start = start_date
+                        upload.date_end = end_date
+                        updated += 1
+
+                    upload.save()
+
             if data_type == 'award':
                 for row in reader:
                     total += 1
