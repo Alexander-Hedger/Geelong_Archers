@@ -111,11 +111,44 @@
         <div class="" id="container">
             <div class="main">
                 <div class="title-container">
-                    <div class="title">Congratulations on Your First Step!</div>
+                    <div class="title">New Sign up for {{event.title}}</div>
                 </div>
                 <div class="text-body">
-                    <p>Dear {{ contact.first_name }} {{ contact.last_name }},</p>
-                    <p>Thank-you for signing up to {{ event }}, please see the essential details below:</p>
+                    
+                    <p>Participant Details:</p>
+                    <table >
+                        <tbody>
+                            <tr>
+                                <td><b>Name:</b></td>
+                                <td>{{contact.first_name}} {{contact.last_name}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Email:</b></td>
+                                <td>{{contact.email}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Phone:</b></td>
+                                <td>{{contact.phone}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Age:</b></td>
+                                <td>{{contact.age}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Left/Right:</b></td>
+                                <td>{{contact.left_right}} handed</td>
+                            </tr>
+                            <tr>
+                                <td><b>Experience:</b></td>
+                                <td>{{contact.shot_before}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Contact date:</b></td>
+                                <td>{{contact.contact_date}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>Event Details</p>
                     <table >
                         <tbody>
                             <tr>
@@ -134,22 +167,9 @@
                                 <td><b>Duration:</b></td>
                                 <td>3 consecutive weeks</td>
                             </tr>
-                            <tr>
-                                <td style="vertical-align: top;"><b>Location:</b></td>
-                                <td>Deakin University Waurn Ponds Campus.<br/>
-                                    Enter via Deakin University Jarvis Road<br/>
-                                    Waurn Ponds<br/>
-                                    Victoria 3216<br/>
-                                    The entrance can be seen on google maps <a href="https://goo.gl/maps/AZtMCTqcQDcotRaP9">here</a>
-                            </tr>
                         </tbody>
                     </table>
-                    <p>Please bring your payment for the course in cash on your first session otherwise you will not be able to participate</p>
-                    <p>For your first week please arrive 15 minutes early so that we can get you set up with your equipment.</p>
-                    <p>It is also crucial that you wear correct attire on the day. It is very important that you wear closed toe shoes and avoid having anything dangling that could catch near your face. This includes things such as hoodie strings, excessive jewelery, and the tying back of long hair.</p>
-                    <p>If you have any questions or concerns please feel free to contact our come and try coordinator on <a href="mailto:comeandtry@geelongarchers.com.au">comeandtry@geelongarchers.com.au</a></p>
-                    <p>Looking forward to seeing you on the day!</p>
-                    <p><span style="color: #1f4e79;"><img style="display: block; margin-left: auto; margin-right: auto;" src="https://www.geelongarchers.com.au/media/photos/albums/directions-1024x410.jpg" alt="" width="100%" height="auto" /></span></p></div></td>
+                    <p>This participant has not paid, please make sure to collect payment on the day or arrange prior</p>
                 </div>
             </div>
         </div>

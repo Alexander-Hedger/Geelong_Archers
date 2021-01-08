@@ -1,2 +1,0 @@
-hello {{ contact.first_name }}
-thankyou for signing up to {{ event }}

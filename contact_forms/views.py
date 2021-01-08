@@ -69,6 +69,26 @@ def contact_events(request, contact_type, event_id):
 
             ##################################################
 
+            #### Send Come and Try Coordinator confirmation email ####
+            plaintext = get_template(
+                settings.BASE_DIR + '/templates/emails/comeandtry-contact-intro-course.txt')
+            htmly = get_template(settings.BASE_DIR +
+                                 '/templates/emails/comeandtry-contact-intro-course.html')
+
+            context = {'contact': contact, 'event': contact_event}
+            subject = f"New Sign up for {contact_event}"
+            from_email = 'donotreply@geelongarchers.com.au'
+            to_email = 'comeandtry@geelongarchers.com.au'
+            text_content = plaintext.render(context)
+            html_content = htmly.render(context)
+
+            msg = EmailMultiAlternatives(
+                subject, text_content, from_email, [to_email])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+
+            ##################################################
+
             messages.success(
                 request, 'You have successfully signed up to the event!')
             return redirect('events-main')
