@@ -22,7 +22,7 @@
                 </div>
                 <div class="card-footer bg-dark d-flex justify-content-end">
                     <a href="{% url 'events-main' %}" class="btn btn-outline-primary btn-lg mr-3">Back to events</a>
-                    {% if contact_event.current_participants < contact_event.max_participants %}
+                    {% if listing_event.current_participants < listing_event.max_participants %}
                         <a href="{% url 'contact-events' event_type listing_event.id %}" class="btn btn-primary btn-lg">Sign up!</a>
                     {% else %}
                         <div class="btn btn-primary btn-lg disabled">Course Full</div>
