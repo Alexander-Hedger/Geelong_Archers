@@ -21,6 +21,7 @@ urlpatterns = [
     path('intro_course_info', views.intro_course_info, name='intro_course_info'),
     path('life_member', views.life_member, name='life_member'),
     path('maintenance', views.maintenance, name='maintenance'),
+    path('mpio', views.mpio, name='mpio'),
     path('nocking', views.nocking, name='nocking'),
     path('sponsors', views.sponsors, name='sponsors'),
     path('string_making', views.string_making, name='string_making'),

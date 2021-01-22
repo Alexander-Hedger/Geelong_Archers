@@ -170,6 +170,15 @@ def maintenance(request):
     return render(request, 'pages/maintenance.html', context)
 
 
+def mpio(request):
+    context = sidebar(request)
+
+    page = PageContent.objects.get(name='mpio')
+    context['page'] = page
+
+    return render(request, 'pages/mpio.html', context)
+
+
 def nocking(request):
     context = sidebar(request)
 
