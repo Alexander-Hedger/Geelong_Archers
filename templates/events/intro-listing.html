@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load django_template_maths %}
+
+{% block title %} | Event {% endblock %}
+
+{% load static %}
+{% block content %}
+<div id="listing" class="col-12 col-md-8 col-lg-9 pl-4 pr-4 mt-5">
+    <div class="row">
+        <div class="col-12 col-sm-10 col-md-12 col-lg-10 m-auto">
+            <div class="card pl-0 ml-0">
+                <img alt="" class="card-img-top" src="{% static 'img/img12.jpg' %}">
+                <div class="card-header px-1">{{ listing_event.title }}</div>
+                <div class="card-body mt-0 pt-2">
+                    <div class="d-flex">
+                        <div class="stats d-inline"><span class="font-weight-bold">Places left: </span>{{ listing_event.max_participants|sub:listing_event.current_participants }}/{{ listing_event.max_participants }}</div>
+                        <div class="stats d-inline ml-4"><span class="font-weight-bold">Left Handed Archer Places left: </span>{{ listing_event.max_lh|sub:listing_event.current_lh }}/{{ listing_event.max_lh }}</div>
+                    </div>
+                   
+                    <div id="date" class="text-muted mt-1 pt-0 d-block">{{ listing_event.date_start }} - {{ listing_event.date_end }}</div>
+                    <div id="desc" class="card-text mt-3">{{ listing_event.description|safe }}</div>
+                </div>
+                <div class="card-footer bg-dark d-flex justify-content-end">
+                    <a href="{% url 'events-main' %}" class="btn btn-outline-primary btn-lg mr-3">Back to events</a>
+                    {% if listing_event.current_participants < listing_event.max_participants %}
+                        <a href="{% url 'contact-events' 'intro' listing_event.id %}" class="btn btn-primary btn-lg">Sign up!</a>
+                    {% else %}
+                        <div class="btn btn-primary btn-lg disabled">Course Full</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

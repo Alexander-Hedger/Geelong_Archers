@@ -47,19 +47,22 @@ def events_main(request):
     return render(request, 'events/events-main.html', context)
 
 
-def events_listing(request, event_type, event_id):
+def intro_listing(request, event_id):
 
-    if event_type == 'motd':
-        contact_event = get_object_or_404(EventMotD, pk=event_id)
-    if event_type == 'comp':
-        contact_event = get_object_or_404(EventComp, pk=event_id)
-    if event_type == 'intro':
-        contact_event = get_object_or_404(EventIntro, pk=event_id)
+    contact_event = get_object_or_404(EventIntro, pk=event_id)
 
     context = sidebar(request)
     context['listing_event'] = contact_event
-    context['event_type'] = event_type
-    return render(request, 'events/events-listing.html', context)
+    return render(request, 'events/intro-listing.html', context)
+
+
+def comp_listing(request, event_id):
+
+    contact_event = get_object_or_404(EventComp, pk=event_id)
+
+    context = sidebar(request)
+    context['listing_event'] = contact_event
+    return render(request, 'events/comp-listing.html', context)
 
 
 def events_create(request, event_type):

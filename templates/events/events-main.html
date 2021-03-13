@@ -27,7 +27,7 @@
         {% if events_intro %}
             {% for event in events_intro %}
             <div class="col-6 col-lg-3 clickable">
-                <a href="{% url 'events-listing' 'intro' event.id %}" class="m-0">
+                <a href="{% url 'intro-listing' event.id %}" class="m-0">
                     <div class="card mb-4">
                         <div class="card-header"></div>
                         <img alt="" class="card-img-top" src="{% static 'img/img12.jpg' %}">
@@ -85,7 +85,7 @@
         {% if events_comp %}
             {% for event in events_comp %}
             <div class="col-6 col-lg-3 clickable">
-                <a href="{% url 'events-listing' 'comp' event.id %}" class="m-0">
+                <a href="{% url 'comp-listing' event.id %}" class="m-0">
                     <div class="card mb-4">
                         <div class="card-header"></div>
                         <img alt="" class="card-img-top" src="{% static 'img/img1.jpg' %}">

@@ -44,6 +44,7 @@ class EventComp(models.Model):
     is_published = models.BooleanField(default=True)
     date_start = models.DateTimeField()
     date_end = models.DateTimeField()
+    event_url = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.short_title
