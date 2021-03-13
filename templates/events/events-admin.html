@@ -42,7 +42,7 @@
                                 {% for event in events_motd %}
                                     
                                         <tr>
-                                            <td><a href="" class="text-secondary">{{ event.short_title }}</a></td>
+                                            <td><a href="{% url 'events-edit' 'motd' event.id %}" class="text-secondary">{{ event.short_title }}</a></td>
                                             {% if event.is_published %}
                                                 <td class="text-center"><i class="far fa-check-circle text-success"></i></td>
                                             {% else %}
@@ -85,7 +85,7 @@
                             {% if events_comp %}
                                 {% for event in events_comp %}
                                     <tr>
-                                        <td><a href="" class="text-secondary">{{ event.short_title }}</a></td>
+                                        <td><a href="{% url 'events-edit' 'comp' event.id %}" class="text-secondary">{{ event.short_title }}</a></td>
                                         {% if event.is_published %}
                                             <td class="text-center"><i class="far fa-check-circle text-success"></i></td>
                                         {% else %}
@@ -127,7 +127,7 @@
                             {% if events_intro %}
                                 {% for event in events_intro %}
                                     <tr>
-                                        <td><a href="" class="text-secondary">{{ event.short_title }}</a></td>
+                                        <td><a href="{% url 'events-edit' 'intro' event.id %}" class="text-secondary">{{ event.short_title }}</a></td>
                                         {% if event.is_published %}
                                             <td class="text-center"><i class="far fa-check-circle text-success"></i></td>
                                         {% else %}

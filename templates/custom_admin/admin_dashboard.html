@@ -144,9 +144,8 @@
                                     <th class="text-center" style="width: 10%">Age</th>
                                     <th class="text-center" style="width: 10%">Dominant</th>
                                     <th class="text-center" style="width: 10%">Experienced</th>
-                                    <th class="text-center" style="width: 10%">Reason</th>
                                     <th class="text-center" style="width: 10%">Date</th>
-                                    <th class="text-center" style="width: 25%">Email</th>
+                                    <th class="text-center" style="width: 35%">Email</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -157,8 +156,7 @@
                                                 <td class="text-center">{{contact.age}}</td>
                                                 <td class="text-center">{{contact.left_right}}</td>
                                                 <td class="text-center">{{contact.shot_before}}</td>
-                                                <td class="text-center">{{contact.reason}}</td>
-                                                <td class="text-center">{{ contact.contact_date|date:'d/m/y' }}</td>
+                                                <td class="text-center">{{contact.contact_date|date:'d/m/y' }}</td>
                                                 <td class="text-center">{{contact.email}}</td>
                                             </tr>
                                        
@@ -207,8 +205,7 @@
             </div>
         </div>
     </div>
-</div>
-    
+</div>    
 
 {% endblock %}
 
