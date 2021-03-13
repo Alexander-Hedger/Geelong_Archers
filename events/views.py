@@ -89,9 +89,10 @@ def events_create(request, event_type):
             event_max_participants = request.POST['event_max_participants']
             event_date_start = request.POST['event_date_start']
             event_date_end = request.POST['event_date_end']
+            event_url = request.POST['event_url']
 
             event = EventComp(title=event_title, short_title=event_short_title, description=event_description, short_description=event_short_description,
-                              max_participants=event_max_participants, date_start=event_date_start, date_end=event_date_end)
+                              max_participants=event_max_participants, date_start=event_date_start, date_end=event_date_end, event_url=event_url)
 
             event.save()
             messages.success(request, 'Your event has been published!')
