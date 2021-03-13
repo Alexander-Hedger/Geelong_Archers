@@ -123,61 +123,6 @@ def events_create(request, event_type):
 
 
 def events_edit(request, event_type, event_id):
-
-    if request.method == 'POST':
-
-        if event_type == 'motd':
-
-            event_short_title = request.POST['event_short_title']
-            event_short_description = request.POST['event_short_description']
-            event_date_start = request.POST['event_date_start']
-            event_date_end = request.POST['event_date_end']
-
-            event = EventMotD(short_title=event_short_title, short_description=event_short_description,
-                              date_start=event_date_start, date_end=event_date_end)
-
-            event.save()
-            messages.success(request, 'Your event has been published!')
-            return redirect('events-admin')
-
-        elif event_type == 'comp':
-
-            event_title = request.POST['event_title']
-            event_short_title = request.POST['event_short_title']
-            event_description = request.POST['event_description']
-            event_short_description = request.POST['event_short_description']
-            event_max_participants = request.POST['event_max_participants']
-            event_date_start = request.POST['event_date_start']
-            event_date_end = request.POST['event_date_end']
-            event_url = request.POST['event_url']
-
-            event = EventComp(title=event_title, short_title=event_short_title, description=event_description, short_description=event_short_description,
-                              max_participants=event_max_participants, date_start=event_date_start, date_end=event_date_end, event_url=event_url)
-
-            event.save()
-            messages.success(request, 'Your event has been published!')
-            return redirect('events-admin')
-
-        elif event_type == 'intro':
-
-            event_title = request.POST['event_title']
-            event_short_title = request.POST['event_short_title']
-            event_description = request.POST['event_description']
-            event_short_description = request.POST['event_short_description']
-            event_max_participants = request.POST['event_max_participants']
-            event_max_lh = request.POST['event_max_lh']
-            event_min_age = request.POST['event_min_age']
-            event_date_start = request.POST['event_date_start']
-            event_date_end = request.POST['event_date_end']
-
-            event = EventIntro(title=event_title, short_title=event_short_title, description=event_description, short_description=event_short_description,
-                               max_participants=event_max_participants, max_lh=event_max_lh, min_age=event_min_age, date_start=event_date_start, date_end=event_date_end)
-
-            event.save()
-
-            messages.success(request, 'Your event has been published!')
-            return redirect('events-admin')
-
     context = sidebar(request)
 
     if event_type == 'motd':
@@ -189,6 +134,53 @@ def events_edit(request, event_type, event_id):
     if event_type == 'intro':
         event = get_object_or_404(EventIntro, pk=event_id)
         context['event'] = event
+
+    if request.method == 'POST':
+
+        if event_type == 'motd':
+
+            event.short_title = request.POST['event_short_title']
+            event.short_description = request.POST['event_short_description']
+            event.date_start = request.POST['event_date_start']
+            event.date_end = request.POST['event_date_end']
+
+            event.save()
+
+            messages.success(request, 'Your event has been saved!')
+            return redirect('events-admin')
+
+        elif event_type == 'comp':
+
+            event.title = request.POST['event_title']
+            event.short_title = request.POST['event_short_title']
+            event.description = request.POST['event_description']
+            event.short_description = request.POST['event_short_description']
+            event.max_participants = request.POST['event_max_participants']
+            event.date_start = request.POST['event_date_start']
+            event.date_end = request.POST['event_date_end']
+            event.event_url = request.POST['event_url']
+
+            event.save()
+
+            messages.success(request, 'Your event has been saved!')
+            return redirect('events-admin')
+
+        elif event_type == 'intro':
+
+            event.title = request.POST['event_title']
+            event.short_title = request.POST['event_short_title']
+            event.description = request.POST['event_description']
+            event.short_description = request.POST['event_short_description']
+            event.max_participants = request.POST['event_max_participants']
+            event.max_lh = request.POST['event_max_lh']
+            event.min_age = request.POST['event_min_age']
+            event.date_start = request.POST['event_date_start']
+            event.date_end = request.POST['event_date_end']
+
+            event.save()
+
+            messages.success(request, 'Your event has been saved!')
+            return redirect('events-admin')
 
     context['event_type'] = event_type
     return render(request, 'events/events-edit.html', context)
