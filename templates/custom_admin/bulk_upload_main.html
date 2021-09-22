@@ -4,7 +4,7 @@
 <div id="bulk_upload" class="col-12 col-md-8 col-lg-9 pl-4 pr-4">
     <!-- Alerts -->
     {% include 'partials/_alerts.html' %}
-    <h3 id="main_title" class="text-center display-4 my-4">Bulk Upload Dashboard</h3>
+    <h3 id="main_title" class="text-center display-4 my-4">Bulk Upload MoTD Events</h3>
     <div class="row">
         <div class="col-12 col-sm-10 col-md-12 col-lg-10 m-auto">
             <div class="card bg-white">
@@ -16,10 +16,6 @@
                         <div class="form-group">
                             <label for="data_type">Data Type</label>
                             <select class="form-control" name="data_type" id="data_type">
-                                <option value="members">Members</option>
-                                <option value="awards">Awards</option>
-                                <option value="comp">Events Comp</option>
-                                <option value="intro">Events Intro</option>
                                 <option value="motd">Events MotD</option>
                             </select>
                         </div>
@@ -27,7 +23,7 @@
                         <div class="form-group">
                             <label for="csv_upload">Upload CSV</label>
                             <input type="file" class="form-control-file" name="csv_upload" id="csv_upload">
-                            <small id="short_title_help" class="form-text text-muted">Only CSV Allowed</small>                             
+                            <small id="short_title_help" class="form-text text-muted">Only CSV Allowed - Create a CSV with 4 columns: Event title, Description, Start_Date, End_Date.<br>Each row will be turned into a new Match of the Day Event.</small>                         
                         </div>
 
                         <div class="form-group text-right my-0 py-0">

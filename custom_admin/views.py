@@ -182,7 +182,12 @@ def bulk_upload_map(request):
     context = sidebar(request)
 
     if request.method == 'POST':
-        csv_upload = request.FILES['csv_upload']
+
+        try:
+            csv_upload = request.FILES['csv_upload']
+        except:
+            messages.error(request, 'Please upload a CSV to continue')
+            return redirect('bulk_upload_main')
 
         if not csv_upload.name.endswith('.csv'):
             messages.error(request, 'Uploaded file MUST be a CSV file')
