@@ -99,8 +99,9 @@ class Account(AbstractBaseUser):
 class Committee(models.Model):
     position = models.CharField(
         max_length=40, unique=True, primary_key=True)
-    member = models.ForeignKey(
-        Account, on_delete=models.DO_NOTHING, blank=True, null=True)
+    member = models.CharField(max_length=100, blank=True, null=True)
+    photo = models.ImageField(upload_to='photos/users',
+                              default='photos/users/user_placeholder.jpg')
     short_desc = models.CharField(max_length=250, blank=True)
     email = models.EmailField(max_length=150, blank=True)
     order = models.IntegerField(blank=True, null=True)

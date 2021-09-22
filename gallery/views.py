@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from functions.functions import sidebar
@@ -5,6 +6,7 @@ from .models import Image, Album
 from PIL import UnidentifiedImageError, Image as PILImage
 
 
+@login_required(login_url='home')
 def gallery_admin(request):
     context = sidebar(request)
 
@@ -15,6 +17,7 @@ def gallery_admin(request):
     return render(request, 'gallery/gallery-admin.html', context)
 
 
+@login_required(login_url='home')
 def gallery_create(request):
     context = sidebar(request)
 
@@ -63,6 +66,7 @@ def gallery_main(request):
     return render(request, 'gallery/gallery-main.html', context)
 
 
+@login_required(login_url='home')
 def gallery_edit(request, album_id):
     context = sidebar(request)
     album = Album.objects.get(id=album_id)
@@ -151,6 +155,7 @@ def gallery_edit(request, album_id):
     return render(request, 'gallery/gallery-edit.html', context)
 
 
+@login_required(login_url='home')
 def gallery_delete(request, album_id):
     album = Album.objects.get(id=album_id)
     album.delete()

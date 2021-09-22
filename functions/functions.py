@@ -3,10 +3,10 @@ from events.models import EventIntro, EventComp, EventMotD
 from accounts.models import Committee, Account
 from django.contrib import messages
 from django.contrib.auth.models import User
+import datetime
 
 # Scraping requirements
 import time
-from datetime import datetime
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import requests
@@ -20,20 +20,15 @@ from selenium.webdriver.chrome.options import Options
 
 def sidebar(request):
 
-    if request.user.is_authenticated:
-        announcements = Announcement.objects.order_by(
-            '-date_published').filter(is_published=True)[:3]
-
-    else:
-        announcements = Announcement.objects.order_by(
-            '-date_published').filter(is_published=True, members_only=False)[:3]
+    announcements = Announcement.objects.order_by(
+        '-date_published').filter(is_published=True)[:3]
 
     events_motd = EventMotD.objects.order_by(
-        'date_start').filter(is_published=True)[:4].values('short_title', 'short_description', 'date_start', 'date_end')
+        'date_start').filter(is_published=True, date_end__gte=datetime.date.today())[:4].values('short_title', 'short_description', 'date_start', 'date_end')
     events_comp = EventComp.objects.order_by(
-        'date_start').filter(is_published=True)[:4].values('short_title', 'short_description', 'date_start', 'date_end')
+        'date_start').filter(is_published=True, date_end__gte=datetime.date.today())[:4].values('short_title', 'short_description', 'date_start', 'date_end')
     events_intro = EventIntro.objects.order_by(
-        'date_start').filter(is_published=True)[:4].values('short_title', 'short_description', 'date_start', 'date_end')
+        'date_start').filter(is_published=True, date_end__gte=datetime.date.today())[:4].values('short_title', 'short_description', 'date_start', 'date_end')
 
     query1 = events_motd.union(events_comp)
     query2 = query1.union(events_intro)
@@ -47,22 +42,22 @@ def sidebar(request):
     return context
 
 
-def validate():
-    come_and_try_id = Committee.objects.get(
-        position='Come and Try Coordinator').member.id
+# def validate():
+#     come_and_try_id = Committee.objects.get(
+#         position='Come and Try Coordinator').member.id
 
-    webmaster_id = Committee.objects.get(
-        position='Webmaster').member.id
+#     webmaster_id = Committee.objects.get(
+#         position='Webmaster').member.id
 
-    validate_events_intro = [webmaster_id]
-    validate_events_comp = [webmaster_id, come_and_try_id]
+#     validate_events_intro = [webmaster_id]
+#     validate_events_comp = [webmaster_id, come_and_try_id]
 
-    context2 = {
-        'validate_events_intro': validate_events_intro,
-        'validate_events_comp': validate_events_comp
-    }
+#     context2 = {
+#         'validate_events_intro': validate_events_intro,
+#         'validate_events_comp': validate_events_comp
+#     }
 
-    return context2
+#     return context2
 
 
 def bulk_scrape(request):
@@ -77,12 +72,12 @@ def scrape(request, requested_member):
     name = str(requested_member)
 
     # # Development
-    # CHROME_PATH = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
-    # CHROMEDRIVER_PATH = 'static/webdrivers/chromedriver'
+    CHROME_PATH = "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
+    CHROMEDRIVER_PATH = 'static/webdrivers/chromedriver'
 
     # Production
-    CHROME_PATH = "/usr/bin/google-chrome-stable"
-    CHROMEDRIVER_PATH = 'static/webdrivers/chromedriver'
+    # CHROME_PATH = "/usr/bin/google-chrome-stable"
+    # CHROMEDRIVER_PATH = 'static/webdrivers/chromedriver'
 
     WINDOW_SIZE = "1920,1080"
 

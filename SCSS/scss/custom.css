@@ -159,18 +159,18 @@ body {
   background-size: cover;
   box-shadow: 0 4px 6px #444444; }
 
-#admin_dashboard .list-group-item {
+#admin_links .list-group-item {
   border-radius: 0 0 0 0;
   background-color: rgba(234, 234, 238, 0.582); }
-#admin_dashboard .list-group-item:hover {
+#admin_links .list-group-item:hover {
   background-color: #00d9ff; }
-#admin_dashboard a {
+#admin_links a {
   color: #282828; }
-#admin_dashboard a:hover {
+#admin_links a:hover {
   box-shadow: 0px 4px 8px 1.5px #282828;
   background-color: #00d9ff;
   cursor: pointer; }
-#admin_dashboard #count {
+#admin_links #count {
   font-size: 0.9rem;
   font-weight: 700;
   border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;

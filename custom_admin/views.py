@@ -3,6 +3,7 @@ import csv
 import datetime
 import re
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from functions.functions import sidebar, scrape, bulk_scrape
 from django.contrib import messages
@@ -10,7 +11,7 @@ from django.core.files.storage import FileSystemStorage
 
 from awards.models import Awards
 from events.models import EventIntro, EventComp, EventMotD
-from accounts.models import Account
+from accounts.models import Account, Committee
 from contact_forms.models import ContactIntro
 from pages.models import PageContent
 from pages.forms import ContentForm
@@ -21,41 +22,62 @@ from django.http import JsonResponse
 regex = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
 
 
+@login_required(login_url='home')
 def admin_dashboard(request):
     context = sidebar(request)
 
-    events_comp = EventComp.objects.order_by(
-        'date_start')
     events_intro = EventIntro.objects.order_by(
-        'date_start')
+        'date_start').filter(is_published=True)
 
     if events_intro.exists():
         try:
             intro_course_id = request.GET['intro_filter']
-            event = EventIntro.objects.get(short_title=intro_course_id)
+            event = EventIntro.objects.get(id=intro_course_id)
             contacts_intro = ContactIntro.objects.order_by(
                 'contact_date').filter(event_id=event)
 
+            context['value'] = int(intro_course_id)
+
         except:
             event = events_intro.first()
-            print(event.date_start)
             contacts_intro = ContactIntro.objects.order_by(
                 'contact_date').filter(event_id=event)
 
         context['contacts_intro'] = contacts_intro
 
-    context['events_comp'] = events_comp
     context['events_intro'] = events_intro
-    context['values'] = request.GET
 
     return render(request, 'custom_admin/admin_dashboard.html', context)
 
 
+@login_required(login_url='home')
+def delete_contact(request):
+    context = sidebar(request)
+
+    if request.method == 'POST':
+
+        contact_id = request.POST['contact_id']
+        contact = ContactIntro.objects.get(id=contact_id)
+        event = EventIntro.objects.get(id=contact.event_id.id)
+
+        messages.success(
+            request, f'{contact} has been removed from {contact.event_id}!')
+
+        event.current_participants -= 1
+        event.save()
+
+        contact.delete()
+
+    return redirect('admin_dashboard')
+
+
+@login_required(login_url='home')
 def bulk_upload_main(request):
     context = sidebar(request)
     return render(request, 'custom_admin/bulk_upload_main.html', context)
 
 
+@login_required(login_url='home')
 def bulk_event_update(request):
     context = sidebar(request)
 
@@ -65,6 +87,55 @@ def bulk_event_update(request):
     return render(request, 'custom_admin/bulk_event_update.html', context)
 
 
+@login_required(login_url='home')
+def committee_admin(request):
+    context = sidebar(request)
+
+    committee = Committee.objects.order_by(
+        'order')
+    context['committee'] = committee
+
+    page = PageContent.objects.get(name='committee')
+    context['page'] = page
+
+    if request.method == 'POST':
+        position = request.POST['position']
+        member_name = request.POST['position_member']
+
+        committee_position = Committee.objects.get(position=position)
+
+        committee_position.member = member_name
+
+        try:
+            if request.FILES['position_photo']:
+                print("new photo request")
+                if committee_position.photo != 'photos/users/user_placeholder.jpg':
+                    if os.path.isfile(committee_position.photo.path):
+                        os.remove(committee_position.photo.path)
+
+                photo = request.FILES['position_photo']
+                committee_position.photo = photo
+
+        except:
+            pass
+
+        try:
+            if request.POST['delete_image']:
+                if committee_position.photo != 'photos/users/user_placeholder.jpg':
+                    if os.path.isfile(committee_position.photo.path):
+                        os.remove(committee_position.photo.path)
+
+                photo = 'photos/users/user_placeholder.jpg'
+                committee_position.photo = photo
+        except:
+            pass
+
+        committee_position.save()
+
+    return render(request, 'custom_admin/committee_admin.html', context)
+
+
+@login_required(login_url='home')
 def page_editor(request, page):
     context = sidebar(request)
 
@@ -84,6 +155,7 @@ def page_editor(request, page):
     return render(request, 'custom_admin/page_editor.html', context)
 
 
+@login_required(login_url='home')
 def tinymce_image_handler(request):
 
     image = request.FILES
@@ -105,6 +177,7 @@ def tinymce_image_handler(request):
         return
 
 
+@login_required(login_url='home')
 def bulk_upload_map(request):
     context = sidebar(request)
 
@@ -146,6 +219,7 @@ def bulk_upload_map(request):
     return render(request, 'custom_admin/bulk_upload_map.html', context)
 
 
+@login_required(login_url='home')
 def bulk_upload_tool(request, data_type):
 
     if request.method == 'POST':

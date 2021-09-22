@@ -1,30 +1,28 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from . import views
 from django.contrib import messages
 from .models import EventIntro, EventComp, EventMotD
-from functions.functions import sidebar, validate
+from functions.functions import sidebar
 from accounts.models import Committee
+import datetime
 
 
+@login_required(login_url='home')
 def events_admin(request):
 
     events_motd = EventMotD.objects.order_by(
-        'date_start')
+        'date_start').filter(is_published=True)
     events_comp = EventComp.objects.order_by(
-        'date_start')
+        'date_start').filter(is_published=True)
     events_intro = EventIntro.objects.order_by(
-        'date_start')
+        'date_start').filter(is_published=True)
 
     context = sidebar(request)
-
-    context2 = validate()
 
     context['events_motd'] = events_motd
     context['events_comp'] = events_comp
     context['events_intro'] = events_intro
-
-    for item in context2:
-        context[item] = context2[item]
 
     return render(request, 'events/events-admin.html', context)
 
@@ -32,11 +30,11 @@ def events_admin(request):
 def events_main(request):
 
     events_motd = EventMotD.objects.order_by(
-        'date_start').filter(is_published=True)[:6]
+        'date_start').filter(is_published=True, date_end__gte=datetime.date.today())[:6]
     events_comp = EventComp.objects.order_by(
-        'date_start').filter(is_published=True)[:6]
+        'date_start').filter(is_published=True, date_end__gte=datetime.date.today())[:6]
     events_intro = EventIntro.objects.order_by(
-        'date_start').filter(is_published=True)[:6]
+        'date_start').filter(is_published=True, date_end__gte=datetime.date.today())[:6]
 
     context = sidebar(request)
 
@@ -65,6 +63,7 @@ def comp_listing(request, event_id):
     return render(request, 'events/comp-listing.html', context)
 
 
+@login_required(login_url='home')
 def events_create(request, event_type):
 
     if request.method == 'POST':
@@ -104,13 +103,12 @@ def events_create(request, event_type):
             event_description = request.POST['event_description']
             event_short_description = request.POST['event_short_description']
             event_max_participants = request.POST['event_max_participants']
-            event_max_lh = request.POST['event_max_lh']
             event_min_age = request.POST['event_min_age']
             event_date_start = request.POST['event_date_start']
             event_date_end = request.POST['event_date_end']
 
             event = EventIntro(title=event_title, short_title=event_short_title, description=event_description, short_description=event_short_description,
-                               max_participants=event_max_participants, max_lh=event_max_lh, min_age=event_min_age, date_start=event_date_start, date_end=event_date_end)
+                               max_participants=event_max_participants, min_age=event_min_age, date_start=event_date_start, date_end=event_date_end)
 
             event.save()
 
@@ -122,6 +120,7 @@ def events_create(request, event_type):
     return render(request, 'events/events-create.html', context)
 
 
+@login_required(login_url='home')
 def events_edit(request, event_type, event_id):
     context = sidebar(request)
 
@@ -184,3 +183,22 @@ def events_edit(request, event_type, event_id):
 
     context['event_type'] = event_type
     return render(request, 'events/events-edit.html', context)
+
+
+@login_required(login_url='home')
+def events_delete(request, event_type, event_id):
+
+    if event_type == 'motd':
+        event = get_object_or_404(EventMotD, id=event_id)
+    elif event_type == 'comp':
+        event = get_object_or_404(EventComp, id=event_id)
+    elif event_type == 'intro':
+        event = get_object_or_404(EventIntro, id=event_id)
+
+    if request.method == 'POST':
+        event.is_published = False
+        event.save()
+        messages.success(request, 'Your Event has been deleted!')
+        return redirect('events-admin')
+
+    return

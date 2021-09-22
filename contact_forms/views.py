@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from functions.functions import sidebar
 from django.contrib import messages
@@ -10,6 +11,7 @@ from django.conf import settings
 # Create your views here.
 
 
+@login_required(login_url='home')
 def contact_admin(request):
     context = sidebar(request)
     return render(request, 'contact_forms/contact-admin.html', context)
@@ -45,7 +47,8 @@ def contact_events(request, contact_type, event_id):
                 contact_event.current_participants) + 1
 
             if contact_dominant == 'left':
-                contact_event.current_lh = int(contact_event.current_lh) + 1
+                contact_event.current_lh = int(
+                    contact_event.current_lh) + 1
 
             contact_event.save()
 

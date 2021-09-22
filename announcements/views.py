@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from . import views
 from django.contrib import messages
@@ -19,6 +20,7 @@ def announcements_main(request):
     return render(request, 'announcements/announcements-main.html', context)
 
 
+@login_required(login_url='home')
 def announcements_create(request):
     if request.method == 'POST':
         announcement_title = request.POST['announcement_title']
@@ -31,13 +33,8 @@ def announcements_create(request):
         else:
             announcement_is_published = False
 
-        if request.POST.get('announcement_members_only'):
-            announcement_members_only = True
-        else:
-            announcement_members_only = False
-
         announcement = Announcement(title=announcement_title, short_title=announcement_short_title,
-                                    announcement=announcement_description, short_announcement=announcement_short_description, is_published=announcement_is_published, members_only=announcement_members_only)
+                                    announcement=announcement_description, short_announcement=announcement_short_description, is_published=announcement_is_published,)
 
         announcement.save()
 
@@ -49,6 +46,7 @@ def announcements_create(request):
         return render(request, 'announcements/announcements-create.html', context)
 
 
+@login_required(login_url='home')
 def announcements_admin(request):
     admin_announcements = Announcement.objects.order_by(
         '-date_published')
@@ -59,6 +57,7 @@ def announcements_admin(request):
     return render(request, 'announcements/announcements-admin.html', context)
 
 
+@login_required(login_url='home')
 def announcements_edit(request, announcement_id):
 
     announcement = Announcement.objects.get(id=announcement_id)
@@ -69,11 +68,6 @@ def announcements_edit(request, announcement_id):
             announcement.is_published = True
         else:
             announcement.is_published = False
-
-        if request.POST.get('announcement_members_only'):
-            announcement.members_only = True
-        else:
-            announcement.members_only = False
 
         announcement.title = request.POST['announcement_title']
         announcement.short_title = request.POST['announcement_short_title']
@@ -90,6 +84,7 @@ def announcements_edit(request, announcement_id):
     return render(request, 'announcements/announcements-edit.html', context)
 
 
+@login_required(login_url='home')
 def announcements_delete(request, announcement_id):
 
     announcement = get_object_or_404(Announcement, pk=announcement_id)

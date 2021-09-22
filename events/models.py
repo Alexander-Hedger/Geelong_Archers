@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+import uuid
 
 
 class EventIntro(models.Model):
@@ -9,8 +10,6 @@ class EventIntro(models.Model):
     short_description = models.CharField(max_length=250)
     max_participants = models.IntegerField(blank=True, null=True)
     current_participants = models.IntegerField(default=0)
-    max_lh = models.IntegerField(blank=True, null=True)
-    current_lh = models.IntegerField(default=0)
     min_age = models.IntegerField(default=10)
     photo = models.ImageField(upload_to='photos/events', blank=True)
     is_published = models.BooleanField(default=True)

@@ -14,7 +14,6 @@
                 <div class="card-body mt-0 pt-2">
                     <div class="d-flex">
                         <div class="stats d-inline"><span class="font-weight-bold">Places left: </span>{{ listing_event.max_participants|sub:listing_event.current_participants }}/{{ listing_event.max_participants }}</div>
-                        <div class="stats d-inline ml-4"><span class="font-weight-bold">Left Handed Archer Places left: </span>{{ listing_event.max_lh|sub:listing_event.current_lh }}/{{ listing_event.max_lh }}</div>
                     </div>
                    
                     <div id="date" class="text-muted mt-1 pt-0 d-block">{{ listing_event.date_start }} - {{ listing_event.date_end }}</div>

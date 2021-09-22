@@ -11,7 +11,7 @@ from datetime import date, timedelta
 import math
 
 
-@login_required
+@login_required(login_url='home')
 @xframe_options_exempt
 def dashboard(request):
     context = sidebar(request)
@@ -150,7 +150,7 @@ def login(request):
         if user is not None:
             auth.login(request, user)
             messages.success(request, 'You are now logged in')
-            return redirect('dashboard')
+            return redirect('admin_dashboard')
         else:
             messages.error(request, 'Invalid credentials')
             return redirect('login')
@@ -159,6 +159,7 @@ def login(request):
         return render(request, 'accounts/login.html', context)
 
 
+@login_required(login_url='home')
 def logout(request):
     if request.method == 'POST':
         auth.logout(request)
@@ -166,6 +167,7 @@ def logout(request):
         return redirect('home')
 
 
+@login_required(login_url='home')
 def account_update(request):
     if request.method == 'POST':
         division = request.POST['user_division']

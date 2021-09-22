@@ -6,10 +6,10 @@ from .models import EventIntro, EventComp, EventMotD
 
 class EventIntroAdmin(admin.ModelAdmin):
     list_display = ('id', 'is_published', 'title', 'short_title', 'date_start', 'date_end', 'description',
-                    'short_description', 'max_participants', 'current_participants', 'max_lh', 'current_lh',)
+                    'short_description', 'max_participants', 'current_participants',)
     search_fields = ('title', 'short_title',)
     list_editable = ('is_published', 'title', 'short_title', 'date_start', 'date_end', 'description',
-                     'short_description', 'max_participants', 'current_participants', 'max_lh', 'current_lh',)
+                     'short_description', 'max_participants', 'current_participants',)
     list_per_page = 25
 
 

@@ -87,7 +87,7 @@
       
       {% if user.is_authenticated %}
       <li class="nav-item">
-            <a class="nav-link" href="{% url 'dashboard' %}"><i class="fas fa-columns mr-2"></i>Welcome {{ user.first_name }} (Dashboard)</span></a>
+            <a class="nav-link" href="{% url 'admin_dashboard' %}"><i class="fas fa-columns mr-2"></i>Welcome {{ user.first_name }} (Dashboard)</span></a>
       </li>
       <li class="nav-item ">
         <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a>

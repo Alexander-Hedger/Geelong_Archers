@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block title %} | Committee {% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="committee" class="col-12 col-md-8 col-lg-9 pl-4 pr-4">
+    
+    <h3 id="main_title" class="text-center">Governing Committee</h3>
+
+    <div class="row px-3 pt-0 mb-4">
+        <div class="col-12 p-0">
+            <div class="card">     
+                <div class="card-header d-flex pl-4">
+                    <div><i class="fas fa-user-friends mr-2"></i></i>Current Committee Members</div>
+                    <div class="ml-auto mr-3"><a href="#" class="btn btn-primary btn-md" data-toggle='modal' data-target="#committee_edit" data-name='{{ event.event_name }}' data-link="{{ event.link }}">Edit</a></div>
+                </div>
+
+                <div class="d-block">
+                    <div class="card-body pt-1">
+                        <table id="contacts_intro_table" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" style="width: 10%">Photo</th>
+                                    <th class="text-left pl-3" style="width: 40%">Position</th>
+                                    <th class="text-left" style="width: 50%">Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if committee %}
+                                    {% for position in committee %}
+                                            <tr>
+                                                <td class="text-center align-middle">
+                                                    {% if position.member == none %}
+                                                        <img alt="missing" class="img-thumbnail img-fluid h-20" src="../media/photos/users/user_placeholder.jpg">
+                                                    {% else %} 
+                                                        <img alt="missing" class="img-thumbnail img-fluid h-20" src="../media/{{ position.photo }}">
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-left pl-3">{{ position.position }}</td>
+                                                <td class="text-left">{{position.member}}</td>
+                                            </tr>
+                                       
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td>No Participants Yet</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="committee_edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <form action="{% url 'committee_admin' %}" method='POST' enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="card bg-white">
+                    <div class="card-header text-center mb-0">
+                        <h3 class="d-inline"><i class="fas fa-user mr-2"></i>Edit Committee Member</h3>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label font-weight-bold pl-3 pr-0" for="position">Position</label>
+                            <div class="col-8">
+                                <select class="form-control mr-3" name="position" id="position">
+                                    {% for position in committee %}
+                                        <option value='{{position.position}}'>{{position.position}}</option>
+                                    {% endfor %}
+                                </select> 
+                            </div>
+                        </div>
+
+                        <div class="form-group row p-3 mb-0">
+                            <label class="font-weight-bold" for="position_member">Name</label>
+                            <input type="text" class="form-control" name="position_member" id="position_member" value="">
+                            <small id="position_member_help" class="form-text text-muted">Leave this field empty if position is vacant</small>
+                        </div>
+
+                        <div class="form-group row px-3 mb-0">
+                            <label class="font-weight-bold" for="position_photo">New Photo</label>
+                            <input type="file" class="form-control-file" name="position_photo" id="position_photo">
+                            <small id="position_photo_help" class="form-text text-muted">Upload a new photo for when this position is being filled by a different member</small>
+                        </div>
+
+                        <div class="custom-control custom-checkbox pt-3">
+                            <input type="checkbox" class="custom-control-input" name="delete_image" value="delete_image" id="delete_image">
+                            <label class="custom-control-label" for="delete_image">Delete Old Photo</label>
+                            <small id="delete_image_help" class="form-text text-muted">Only tick this box when the position is becoming vacant and you wish to return the photo to the default</small>
+                        </div>
+
+                    </div>
+                    <div class="card-footer bg-dark d-flex justify-content-end py-2">
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary text-dark ml-3">Update</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

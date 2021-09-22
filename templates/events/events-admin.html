@@ -8,9 +8,6 @@
 
 {% block content %}
 
-<!-- {% if user.id in validate_events_intro %}
-    AYAYAYAYAYAY
-{% endif %} -->
 <div id="events-admin" class="col-12 col-md-8 col-lg-9 pl-4 pr-4">
     <div class="row">
         <div class="col-12 col-md-8 col-lg-6 mx-auto mb-0 pb-0">
@@ -31,10 +28,9 @@
                     <table id="motd_table" class="display" style="width:100%">
                         <thead>
                             <tr>
-                                <th style="width: 33.34%">Short Title</th>
-                                <th style="width: 16.66%" class="text-center">Published</th>
-                                <th style="width: 25%" class="text-center">Date Start</th>
-                                <th style="width: 25%" class="text-center">Date End</th>
+                                <th style="width: 40%">Short Title</th>
+                                <th style="width: 30%" class="text-center">Date Start</th>
+                                <th style="width: 30%" class="text-center">Date End</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,11 +39,6 @@
                                     
                                         <tr>
                                             <td><a href="{% url 'events-edit' 'motd' event.id %}" class="text-secondary">{{ event.short_title }}</a></td>
-                                            {% if event.is_published %}
-                                                <td class="text-center"><i class="far fa-check-circle text-success"></i></td>
-                                            {% else %}
-                                                <td class="text-center"> <i class="far fa-times-circle text-danger"></i></td>
-                                            {% endif %}
                                             <td class="text-center">{{ event.date_start }}</td>
                                             <td class="text-center">{{ event.date_end }}</td>
                                         </tr>
@@ -75,10 +66,9 @@
                     <table id="comp_table" class="display" style="width:100%">
                         <thead>
                             <tr>
-                                <th style="width: 33.34%">Short Title</th>
-                                <th style="width: 16.66%" class="text-center">Published</th>
-                                <th style="width: 25%" class="text-center">Date Start</th>
-                                <th style="width: 25%" class="text-center">Date End</th>
+                                <th style="width: 40%">Short Title</th>
+                                <th style="width: 30%" class="text-center">Date Start</th>
+                                <th style="width: 30%" class="text-center">Date End</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -86,11 +76,6 @@
                                 {% for event in events_comp %}
                                     <tr>
                                         <td><a href="{% url 'events-edit' 'comp' event.id %}" class="text-secondary">{{ event.short_title }}</a></td>
-                                        {% if event.is_published %}
-                                            <td class="text-center"><i class="far fa-check-circle text-success"></i></td>
-                                        {% else %}
-                                            <td class="text-center"> <i class="far fa-times-circle text-danger"></i></td>
-                                        {% endif %}
                                         <td class="text-center">{{ event.date_start }}</td>
                                         <td class="text-center">{{ event.date_end }}</td>
                                     </tr>
@@ -117,10 +102,9 @@
                     <table id="intro_table" class="display" style="width:100%">
                         <thead>
                             <tr>
-                                <th style="width: 33.34%">Short Title</th>
-                                <th style="width: 16.66%" class="text-center">Published</th>
-                                <th style="width: 25%" class="text-center">Date Start</th>
-                                <th style="width: 25%" class="text-center">Date End</th>
+                                <th style="width: 40%">Short Title</th>
+                                <th style="width: 30%" class="text-center">Date Start</th>
+                                <th style="width: 30%" class="text-center">Date End</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -128,11 +112,6 @@
                                 {% for event in events_intro %}
                                     <tr>
                                         <td><a href="{% url 'events-edit' 'intro' event.id %}" class="text-secondary">{{ event.short_title }}</a></td>
-                                        {% if event.is_published %}
-                                            <td class="text-center"><i class="far fa-check-circle text-success"></i></td>
-                                        {% else %}
-                                            <td class="text-center"> <i class="far fa-times-circle text-danger"></i></td>
-                                        {% endif %}
                                         <td class="text-center">{{ event.date_start }}</td>
                                         <td class="text-center">{{ event.date_end }}</td>
                                     </tr>

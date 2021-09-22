@@ -11,14 +11,10 @@
             {% for position in committee %}
                 <div class="col-12 col-lg-6 col-xl-4 mb-4">
                     <div class="card h-100">
-                        {% if position.member == none %}
-                            <img alt="" class="card-img-top" src="../media/photos/users/user_placeholder.jpg">
-                        {% else %} 
-                            <img alt="" class="card-img-top" src="../media/{{ position.member.photo }}">
-                        {% endif %}
+                        <img alt="" class="card-img-top" src="../media/{{ position.photo }}">
                         <div class="card-body">
                         <h4 class="card-title">{{ position.position }}</h4>
-                        {% if position.member == none %}
+                        {% if position.member == '' %}
                             <h6 class="card-subtitle mb-2 text-muted">Position Vacant</h6>
                         {% else %} 
                             <h6 class="card-subtitle mb-2 text-muted">{{position.member}}</h6>

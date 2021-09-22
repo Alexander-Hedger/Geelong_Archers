@@ -1,9 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from functions.functions import sidebar
 from .models import CommitteeMinutes, AgmMinutes
 # Create your views here.
 
 
+@login_required(login_url='home')
 def minutes_admin(request):
 
     committee_minutes = CommitteeMinutes.objects.order_by('-date')
@@ -18,6 +20,7 @@ def minutes_admin(request):
     return render(request, 'minutes/minutes-admin.html', context)
 
 
+@login_required(login_url='home')
 def minutes_upload(request):
     if request.method == 'POST' and request.FILES['minutes_upload']:
         title = request.POST['minutes_title']
@@ -37,6 +40,7 @@ def minutes_upload(request):
     return redirect('minutes-admin')
 
 
+@login_required(login_url='home')
 def minutes_delete(request, minutes_type, pk):
     if request.method == 'POST':
 
