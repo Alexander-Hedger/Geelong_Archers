@@ -41,7 +41,7 @@
                         <div class="card-body">
                             <h5 id="title" class="card-title pb-0 mb-0">{{ contact_event.short_title }}</h5>
                             <small id="date" class="text-muted mt-0 pt-0">{{ contact_event.date_start }}-{{ contact_event.date_end }}</small>
-                            <p id="desc" class="card-text">{{ contact_event.short_description }} Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore eveniet excepturi magni sint cum voluptatibus esse, ratione a cupiditate cumque.</p>
+                            <p id="desc" class="card-text">{{ contact_event.short_description }}</p>
                         </div>
                     </div>
                 </div>
@@ -134,7 +134,11 @@
                         </div>
                         <div class="form-group text-right my-0 py-0">
                             <a href="{% url 'events-main' %}" class="btn btn-outline-danger btn-lg mr-3">Cancel</a>
+                            {% if listing_event.current_participants < listing_event.max_participants %}
                             <input type="submit" value="Sign Up!" class="btn btn-primary btn-lg">
+                            {% else %}
+                            <div class="btn btn-primary btn-lg disabled">Course Full</div>
+                            {% endif %}
                         </div>
                     </form>
                 </div>
