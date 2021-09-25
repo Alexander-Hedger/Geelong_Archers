@@ -42,9 +42,9 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{% url 'facilities' %}">About Us</a>
-            {% if user.is_authenticated %}
+            <!-- {% if user.is_authenticated %}
             <a class="dropdown-item" href="{% url 'store-main' %}">Club Merchandise</a>
-            {% endif %}
+            {% endif %} -->
             <a class="dropdown-item" href="{% url 'committee' %}">Committee Members</a>
             <a class="dropdown-item" href="{% url 'life_member' %}">Life Members</a>
             <a class="dropdown-item" href="{% url 'history' %}">History of the Club</a>
