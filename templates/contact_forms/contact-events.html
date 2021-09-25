@@ -134,7 +134,7 @@
                         </div>
                         <div class="form-group text-right my-0 py-0">
                             <a href="{% url 'events-main' %}" class="btn btn-outline-danger btn-lg mr-3">Cancel</a>
-                            {% if listing_event.current_participants < listing_event.max_participants %}
+                            {% if contact_event.current_participants < contact_event.max_participants %}
                             <input type="submit" value="Sign Up!" class="btn btn-primary btn-lg">
                             {% else %}
                             <div class="btn btn-primary btn-lg disabled">Course Full</div>
