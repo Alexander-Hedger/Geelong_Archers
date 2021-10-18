@@ -47,7 +47,7 @@
                                                 <td class="text-center"> <i class="far fa-times-circle text-danger"></i></td>
                                             {% endif %}
                                             <td class="text-center">{{ announcement.short_announcement|slice:":50" }}...</td>
-                                            <td class="text-center">{{ announcement.date_published|date:'d/m/y, P' }}</td>
+                                            <td><a href="{% url 'announcements-edit' announcement.id %}" class="text-center text-secondary">{{ announcement.date_published|date:'d/m/y, P' }}</a></td>
                                         </tr>
                                 {% endfor %}
                             {% else %}
