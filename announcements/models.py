@@ -3,8 +3,8 @@ from django.utils import timezone
 
 
 class Announcement(models.Model):
-    title = models.CharField(max_length=140)
-    short_title = models.CharField(max_length=50)
+    title = models.CharField(default='Title', max_length=140)
+    short_title = models.CharField(default='Short Title', max_length=50)
     announcement = models.TextField()
     short_announcement = models.CharField(max_length=250)
     is_published = models.BooleanField(default=True)
